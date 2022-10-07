@@ -31,3 +31,8 @@ export const Content = styled.div`
     color: ${({ theme }) => theme.text};
   }
 `;
+
+export const Title = styled.h1`
+  color: ${( {theme} ) => theme.accent} ;
+  display: "block";
+`;
