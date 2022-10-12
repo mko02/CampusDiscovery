@@ -6,6 +6,19 @@ export function Account(){
             <div>
                 <h1>This is the account page!!</h1>
                 <p>Log in or register here</p>
+                <form>
+                    <label>
+                        Username:
+                        <input type="text" name="name" />
+                    </label>
+                    <p></p>
+                    <label>
+                        Password:
+                        <input type="text" name="name" />
+                    </label>
+                    <p></p>
+                    <input type="submit" value="Submit" />
+                </form>
             </div>
         )
 
