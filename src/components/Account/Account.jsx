@@ -77,6 +77,8 @@ export function Account() {
             onChange={(e) => setName(e.target.value)}
           />
           <br />
+          <i>Names can only be one or two words, with no special characters (besides one space)</i>
+          <br />
           <label for="email">Email:</label>
           <input
             type="email"
