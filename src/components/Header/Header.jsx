@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as Styled from "./index.styled";
+import * as Styled from "./Header.styled";
 
 export function Header(){
     return (<Styled.Container>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as Styled from "./index.styled";
+import * as Styled from "./Home.styled";
 
 export function Home() {
     return (
