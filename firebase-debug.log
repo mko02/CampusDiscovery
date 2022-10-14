@@ -1,0 +1,33 @@
+[debug] [2022-10-14T21:24:27.457Z] ----------------------------------------------------------------------
+[debug] [2022-10-14T21:24:27.459Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ethan\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-10-14T21:24:27.459Z] CLI Version:   11.14.3
+[debug] [2022-10-14T21:24:27.459Z] Platform:      win32
+[debug] [2022-10-14T21:24:27.459Z] Node Version:  v16.15.0
+[debug] [2022-10-14T21:24:27.460Z] Time:          Fri Oct 14 2022 17:24:27 GMT-0400 (Eastern Daylight Time)
+[debug] [2022-10-14T21:24:27.460Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-10-14T21:24:27.521Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-10-14T21:24:27.521Z] > authorizing via signed-in user (ethananhphan@gmail.com)
+[debug] [2022-10-14T21:24:27.521Z] [iam] checking project gt-campus-discovery for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2022-10-14T21:24:27.522Z] > refreshing access token with scopes: []
+[debug] [2022-10-14T21:24:27.524Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-10-14T21:24:27.524Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-10-14T21:24:27.617Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-10-14T21:24:27.617Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-10-14T21:24:27.625Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/gt-campus-discovery:testIamPermissions [none]
+[debug] [2022-10-14T21:24:27.625Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/gt-campus-discovery:testIamPermissions x-goog-quota-user=projects/gt-campus-discovery
+[debug] [2022-10-14T21:24:27.625Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gt-campus-discovery:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]}
+[debug] [2022-10-14T21:24:27.784Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/gt-campus-discovery:testIamPermissions 200
+[debug] [2022-10-14T21:24:27.784Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gt-campus-discovery:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]}
+[debug] [2022-10-14T21:24:27.785Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery [none]
+[debug] [2022-10-14T21:24:27.990Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery 200
+[debug] [2022-10-14T21:24:27.990Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery {"projectId":"gt-campus-discovery","projectNumber":"139794595423","displayName":"gt-campus-discovery","name":"projects/gt-campus-discovery","resources":{"hostingSite":"gt-campus-discovery","realtimeDatabaseInstance":"gt-campus-discovery-default-rtdb"},"state":"ACTIVE","etag":"1_2896fed0-5375-46b4-aeb0-2f525380e6e0"}
+[debug] [2022-10-14T21:24:27.991Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery [none]
+[debug] [2022-10-14T21:24:28.199Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery 200
+[debug] [2022-10-14T21:24:28.199Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gt-campus-discovery {"projectId":"gt-campus-discovery","projectNumber":"139794595423","displayName":"gt-campus-discovery","name":"projects/gt-campus-discovery","resources":{"hostingSite":"gt-campus-discovery","realtimeDatabaseInstance":"gt-campus-discovery-default-rtdb"},"state":"ACTIVE","etag":"1_2896fed0-5375-46b4-aeb0-2f525380e6e0"}
+[info] 
+[info] === Deploying to 'gt-campus-discovery'...
+[info] 
+[info] i  deploying database, hosting 
+[info] i  database: checking rules syntax... 
+[debug] [2022-10-14T21:24:28.204Z] >>> [apiv2][query] GET https://firebasedatabase.googleapis.com/v1beta/projects/gt-campus-discovery/locations/-/instances/gt-campus-discovery-default-rtdb [none]
