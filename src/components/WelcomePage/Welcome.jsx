@@ -1,17 +1,29 @@
 import React from 'react'
-import { Home } from "../exportPages";
-import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import './welcome.css'
 
 export function Welcome() {
   return (
-    <div> 
-        <p className='title_style'>Welcome Page</p>
+    <div className='welcome_container'> 
+
+      <div>
+        <h1 className='title_style'>
+          You are on the Welcome Page
+        </h1>
+        <div className='subtitle_style'>
+          <p>
+          Please login below!
+          </p> 
+        </div>
+      </div>
+
+      <div className='button_div'>
         <a href="/#/account">
-            <div className='button_style'>
-                <button>Start App</button>
-            </div>
+          <button className='button_style'>
+            Start App
+          </button>
         </a>
+      </div>
+
     </div>
   )
 }
