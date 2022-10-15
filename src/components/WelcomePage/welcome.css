@@ -5,10 +5,11 @@
     border:none; 
     border-radius:10px; 
     padding:15px;
-    min-height:30px; 
+    height:25px; 
     min-width: 120px;
-    margin-top: 250px;
+    margin-top: 200px;
     font-family: 'Source Code Pro', monospace;
+    text-decoration: none;
 }
 .button_div {
     align-items: center;

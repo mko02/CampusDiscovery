@@ -36,13 +36,17 @@ export const logInWithEmailAndPassword = async (email, password) => {
 }
 
 export const registerWithEmailAndPassword = async (name, accountType, email, password) => {
+    document.getElementById("registerstatus").textContent = "";
     try {
         if (name == null || name.length < 1 || !(/^[A-z]+\s?[A-z]*$/).test(name)) {
             throw new Error("Invalid name.")
         }
+        if (accountType == null || accountType == "") {
+            throw new Error("Please select an account type.")
+        }
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
-        console.log("Register successsful")
+        return 2;
     } catch (err) {
         document.getElementById("registerstatus").textContent = err.message;
     }

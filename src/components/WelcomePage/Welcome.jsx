@@ -17,11 +17,9 @@ export function Welcome() {
       </div>
 
       <div className='button_div'>
-        <a href="/#/account">
-          <button className='button_style'>
+          <a href="/#/account" className='button_style'>
             Start App
-          </button>
-        </a>
+          </a>
       </div>
 
     </div>
