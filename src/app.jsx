@@ -9,26 +9,21 @@ function App() {
   return (
     <HashRouter>
       <main>
-        <Header></Header>
-        <div>
-          <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="account">Account</NavLink>
-            </li>
-            <li>
-              <NavLink to="dashboard">Dashboard</NavLink>
-            </li>
-          </ul>
-        </div>
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/" element={<Welcome />} />
+            <Route path="/account" element={
+              <>
+                <Header></Header>
+                <Account />
+              </>
+            } />
+            <Route path="/dashboard" element={
+              <>
+                <Header></Header>
+                <Dashboard />
+              </>
+            } />
           </Routes>
         </div>
       </main>

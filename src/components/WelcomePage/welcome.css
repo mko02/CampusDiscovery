@@ -1,10 +1,41 @@
 .button_style {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
     text-align: center;
+    background-color:#0a0a23;
+    color: #fff;
+    border:none; 
+    border-radius:10px; 
+    padding:15px;
+    height:25px; 
+    min-width: 120px;
+    margin-top: 200px;
+    font-family: 'Source Code Pro', monospace;
+    text-decoration: none;
+}
+.button_div {
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .title_style {
-    font-size: x-large;
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 200px;
+    margin-bottom: 0px;
+}
+
+.subtitle_style {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 0px;
+}
+
+.welcome_container {
+    width: 80%;
+    max-width: 200x;
+    margin: auto;
+    align-items: center;
 }
