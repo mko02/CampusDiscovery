@@ -6,6 +6,8 @@ import {
   registerWithEmailAndPassword
 } from "../../firebase";
 import * as Styled from "./Account.styled";
+import './Account.css'
+
 
 export function Account() {
   const [email, setEmail] = useState("");
