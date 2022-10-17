@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
-import { Account, Dashboard, Header, Home , Welcome} from "./components/exportPages";
+import { Account, Dashboard, Header, Home, Welcome } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
+import "./app.css";
 import * as Styled from "./app.styled";
 
 function App() {
