@@ -13,25 +13,6 @@ export const Container = styled.header`
   text-align: center;
 `;
 
-export const Content = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: space-between;
-  width: 70%;
-  @media (max-width: 768px) {
-    width: 90%;
-  }
-  max-width: 800px;
-  svg:hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
-  a {
-    color: ${({ theme }) => theme.text};
-  }
-`;
-
 export const Title = styled.h1`
   color: ${( {theme} ) => theme.accent} ;
   display: "block";

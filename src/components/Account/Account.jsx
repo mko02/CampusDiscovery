@@ -5,7 +5,7 @@ import {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword
 } from "../../firebase";
-import * as Styled from "./Account.styled";
+import "./Account.css";
 
 export function Account() {
   const [email, setEmail] = useState("");
@@ -19,74 +19,84 @@ export function Account() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    <div>
+    <div id="pageContainer">
       <h1>Account</h1>
       {status != 2 && (
         <>
-          <input
-            type="radio"
-            name="loginregister"
-            value="login"
-            id="login"
-            checked={status === 0}
-            onClick={(e) => radioHandler(0)}
-          ></input>
-          <label for="login">Login</label>
-          <input
-            type="radio"
-            name="loginregister"
-            value="register"
-            id="register"
-            checked={status === 1}
-            onClick={(e) => radioHandler(1)}
-          ></input>
-          <label for="register">Register</label>
+          <label for="login" class="loginregisterLabel">
+            <input
+              type="radio"
+              name="loginregister"
+              value="login"
+              id="login"
+              checked={status === 0}
+              onClick={(e) => radioHandler(0)}
+            ></input>
+            Login
+          </label>
+          <label for="register" class="loginregisterLabel">
+            <input
+              type="radio"
+              name="loginregister"
+              value="register"
+              id="register"
+              checked={status === 1}
+              onClick={(e) => radioHandler(1)}
+            ></input>
+            Register
+          </label>
         </>
       )}
 
       {status === 1 && (
         <>
           <p>Register an account</p>
-          <input
-            type="radio"
-            id="student"
-            name="accountType"
-            value="student"
-            checked={accountType === "Student"}
-            onClick={(e) => setAccountType("Student")}
-          ></input>
-          <label for="student">Student</label>
-          <input
-            type="radio"
-            id="teacher"
-            name="accountType"
-            value="teacher"
-            checked={accountType === "Teacher"}
-            onClick={(e) => setAccountType("Teacher")}
-          ></input>
-          <label for="teacher">Teacher</label>
-          <input
-            type="radio"
-            id="organizer"
-            name="accountType"
-            checked={accountType === "Organizer"}
-            onClick={(e) => setAccountType("Organizer")}
-          ></input>
-          <label for="organizer">Organizer</label>
+          <label class="fieldLabel">Choose type of account</label>
+          <label for="student">
+            <input
+              type="radio"
+              id="student"
+              name="accountType"
+              value="student"
+              checked={accountType === "Student"}
+              onClick={(e) => setAccountType("Student")}
+            ></input>
+            Student
+          </label>
+          <label for="teacher">
+            <input
+              type="radio"
+              id="teacher"
+              name="accountType"
+              value="teacher"
+              checked={accountType === "Teacher"}
+              onClick={(e) => setAccountType("Teacher")}
+            ></input>
+            Teacher
+          </label>
+          <label for="organizer">
+            <input
+              type="radio"
+              id="organizer"
+              name="accountType"
+              checked={accountType === "Organizer"}
+              onClick={(e) => setAccountType("Organizer")}
+            ></input>
+            Organizer
+          </label>
           <br></br>
-          <label for="name">Name:</label>
+          <label class="fieldLabel" for="name">Name:</label>
+          <i>
+            Names can only be one or two words, with no special characters
+            (besides one space)
+          </i><br />
           <input
             type="text"
             id="name"
             onChange={(e) => setName(e.target.value)}
           />
           <br />
-          <i>
-            Names can only be one or two words, with no special characters
-            (besides one space)
-          </i>
-          <br />
-          <label for="email">Email:</label>
+          <label class="fieldLabel" for="email">Email:</label>
           <input
             type="email"
             id="email"
@@ -94,7 +104,7 @@ export function Account() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <br />
-          <label>Password:</label>
+          <label class="fieldLabel">Password:</label>
           <input
             type="password"
             name="name"
@@ -124,14 +134,14 @@ export function Account() {
       {status === 0 && (
         <>
           <p>Login</p>
-          <label for="email">Email:</label>
+          <label for="email" class="fieldLabel">Email:</label>
           <input
             type="email"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <br />
-          <label>Password:</label>
+          <label class="fieldLabel">Password:</label>
           <input
             type="password"
             name="name"
