@@ -8,7 +8,10 @@ import {
     signOut
 } from "firebase/auth";
 import {
-    getDatabase
+    getDatabase,
+    push,
+    ref,
+    set
 } from "firebase/database";
 const firebaseConfig = {
     apiKey: "AIzaSyCVBNJNQqsGTGIyxRgFwWwD9lnkZAMg5i8",
@@ -28,11 +31,12 @@ export const auth = getAuth(app);
 export const db = getDatabase(app);
 
 export const logInWithEmailAndPassword = async (email, password) => {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
+    await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user;
+        window.location.replace("#/dashboard");
+    }).catch((err) => {
         document.getElementById("loginstatus").textContent = err.message;
-    }
+    });
 }
 
 export const registerWithEmailAndPassword = async (name, accountType, email, password) => {
@@ -46,6 +50,11 @@ export const registerWithEmailAndPassword = async (name, accountType, email, pas
         }
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
+        set(ref(db, `/users/${user.uid}`), {
+            name: name,
+            email: email,
+            accountType: accountType
+        });
         return 2;
     } catch (err) {
         document.getElementById("registerstatus").textContent = err.message;
