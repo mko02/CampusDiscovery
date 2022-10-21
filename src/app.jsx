@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Account, Dashboard, Header, Home, Welcome } from "./components/exportPages";
+import { Account, Dashboard, Header, Home, Welcome, Event } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import "./app.css";
@@ -23,6 +23,12 @@ function App() {
               <>
                 <Header></Header>
                 <Dashboard />
+              </>
+            } />
+            <Route path="/event/:id" element={
+              <>
+                <Header></Header>
+                <Event />
               </>
             } />
           </Routes>
