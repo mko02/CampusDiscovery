@@ -11,6 +11,7 @@ import {
     getDatabase,
     push,
     ref,
+    get,
     set
 } from "firebase/database";
 const firebaseConfig = {
@@ -59,4 +60,16 @@ export const registerWithEmailAndPassword = async (name, accountType, email, pas
     } catch (err) {
         document.getElementById("registerstatus").textContent = err.message;
     }
+}
+
+export const getEvent = async (id) => {
+    get(ref(db, `/events/${id}`)).then((snap) => {
+        if(snap.exists()) {
+            return snap.val();
+        } else {
+            return null;
+        }
+    }).catch((error) => {
+        console.log(error);
+    })
 }
