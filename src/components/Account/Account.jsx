@@ -1,7 +1,5 @@
 import { Component, React, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import {
-  auth,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword
 } from "../../firebase";
@@ -16,7 +14,6 @@ export function Account() {
   const radioHandler = (status) => {
     setStatus(status);
   };
-  const [user, loading, error] = useAuthState(auth);
 
   return (
     <div id="pageContainer">
