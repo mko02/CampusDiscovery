@@ -1,34 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { ref, onValue } from 'firebase/database';
-import { db } from '../../firebase';
+import { ref, get } from 'firebase/database';
+import { db, getAnyEvent } from '../../firebase';
 import { EventCard } from '../EventCard/EventCard';
 
 export function Dashboard(){
     const [ events, setEvents ] = useState([]);
+    const [ content, setContent ] = useState([]);
+    const [ hasLoaded, setLoaded ] = useState(false);
 
     var eventList = [];
 
     useEffect(() => {
-        eventList = [];
-        const eventItem = ref(db, "events/");
-        onValue(eventItem, (snapshot) => {
-            snapshot.forEach(c => {
-                const eventObject = c.val();
-                eventList.push(eventObject.title);
+        if(!hasLoaded) {
+            getAnyEvent().then((snap) => {
+                console.log(snap)
+                eventList = []
+                const value = snap.val()
+                for (let event in value) {
+                    eventList.push(value[event].title)
+                }
+                console.log(eventList);
+                setEvents(eventList);
+                setLoaded(true);
             })
-        })
-        setEvents(eventList);
-        console.log("EVENTLIST");
-        console.log(events);
+        }
     }, []);
 
     return (
         <div>
             <h1>Dashboard:</h1>
             <div>
-                    {events.map((data) => {
-                        return (<EventCard title = { data } />);
-                    })}
+                {events.map(function(obj, i){
+                    return <EventCard title={obj} key={i} />;
+                })}
             </div>
         </div>
     )
