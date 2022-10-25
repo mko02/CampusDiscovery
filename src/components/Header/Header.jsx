@@ -4,7 +4,7 @@ import * as Styled from "./Header.styled";
 
 export function Header(){
     return (<Styled.Container>
-        <Styled.Title>Temporary Header</Styled.Title>
+        <Styled.Title>Campus Discovery</Styled.Title>
     </Styled.Container>
     );
 }

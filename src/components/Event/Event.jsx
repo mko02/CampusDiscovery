@@ -16,7 +16,7 @@ export function Event() {
         setTitle(val.title);
         setDescr(val.description);
       } else {
-        window.location.assign("/#/dashboard")
+        window.location.replace("/#/dashboard")
       }
     })
     .catch((error) => {
