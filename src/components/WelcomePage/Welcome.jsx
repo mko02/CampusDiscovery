@@ -6,18 +6,18 @@ export function Welcome() {
     <div className='welcome_container'> 
 
       <div>
-        <h1 class='title_style'>
+        <h1 className='title_style'>
           Welcome to the Campus Discovery
         </h1>
-        <div class='subtitle_style'>
+        <div className='subtitle_style'>
           <p>
           Please login below!
           </p> 
         </div>
       </div>
 
-      <div class='button_div'>
-          <a href="/#/account" class='button_style'>
+      <div className='button_div'>
+          <a href="/#/account" className='button_style'>
             Start App
           </a>
       </div>

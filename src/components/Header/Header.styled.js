@@ -9,6 +9,8 @@ export const Container = styled.header`
   background-color: #090d0f;
   margin-bottom: 15px;
   text-align: center;
+  position: fixed;
+  top: 0;
 `;
 
 export const Title = styled.h1`

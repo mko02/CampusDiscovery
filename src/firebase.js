@@ -41,8 +41,11 @@ export const logInWithEmailAndPassword = async (email, password) => {
 export const registerWithEmailAndPassword = async (name, accountType, email, password) => {
     document.getElementById("registerstatus").textContent = "";
     try {
-        if (name == null || name.length < 1 || !(/^[A-z]+\s?[A-z]*$/).test(name)) {
-            throw new Error("Invalid name.")
+        if (name == null || name.length < 1) {
+            throw new Error("Invalid name. Name cannot be blank.")
+        }
+        if (!(/^([A-z0-9]+\s?)+$/).test(name) || !(/[A-z]/).test(name)) {
+            throw new Error("Invalid name. Name must only have alphanumeric characters and one space between words.")
         }
         if (accountType == null || accountType == "") {
             throw new Error("Please select an account type.")
@@ -62,5 +65,8 @@ export const registerWithEmailAndPassword = async (name, accountType, email, pas
 
 export const getEvent = async (id) => {
     return get(ref(db, `/events/${id}`));
+}
+
 export const getAnyEvent = async () => {
     return get(ref(db, "events/"));
+}
