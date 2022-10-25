@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 
-import {
-  Account,
-  Dashboard,
-  Event,
-  Header,
-  Home,
-  Welcome
-} from "./components/exportPages";
+import { Account, Dashboard, Header, Home, Welcome, Event, CreateEvent } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import "./app.css";
@@ -49,10 +42,16 @@ function App() {
                   <Event />
                 </div>
               </>
-            }
-          />
-        </Routes>
-        <svg class="waves" id="wave1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            } />
+            <Route path="/CreateEvent" element={
+              <>
+                <Header></Header>
+                <CreateEvent/>
+              </>
+            } />
+          </Routes>
+        </div>
+<svg class="waves" id="wave1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#20242B"
             fill-opacity="1"
