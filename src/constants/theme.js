@@ -1,5 +1,6 @@
 export const theme = {
     text: "#FFFFFF",
-    background100: "#121212",
-    accent: "#22cccc",
+    accent: "black",
+    bg_light: "#0C1013",
+    bg_dark: "#0C0C0C"
 };
