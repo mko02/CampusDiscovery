@@ -1,11 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 .content {
-    width: 100%;
-    max-width: 700px;
+    width: 90%;
+    max-width: 900px;
     margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+    color: white;
 }
 
 html,
 body {
    margin: 0;
    padding: 0;
+}
+html {
+    background: #0F1319;
+    background-attachment: fixed;
+    font-family: 'Fira Sans';
+}
+
+.waves {
+    position: absolute;
+    left: 0;
+}
+
+#wave1 {
+    z-index: -99;
+    bottom: 0px;
+}
+
+#wave2 {
+    z-index: -100;
+    bottom: 20px;
 }

@@ -1,13 +1,12 @@
 /* STYLE SECTIONING TAGS */
 
 p {
-   font-family: 'IBM Plex Mono', monospace;
    text-align: center;
 }
 
 body {
    text-align: center;
-   font-family: 'Jost', sans-serif;
+   font-family: 'Fira Sans', sans-serif;
 }
 
 p {
@@ -24,10 +23,11 @@ span {
 
 button {
    border-radius: 20px;
-   border: 1px solid black;
-   background-color: black;
+   border: none;
+   background: #5568FE;
    color: #FFFFFF;
    font-size: 12px;
+   font-family: 'Fira Sans';
    font-weight: bold;
    padding: 12px 45px;
    letter-spacing: 1px;
@@ -49,14 +49,20 @@ button:hover {
 }
 
 input {
-   background-color: rgb(228, 228, 228);
+   background-color: rgb(66, 70, 80);
    padding: 10px 15px;
    margin: 8px 0;
    max-width: 250px;
    width: 100%;
    border: black;
    border-radius: 5px;
+   color: white;
+   font-family: 'Fira Sans';
 }
+
+input[type="text"]:active {
+   outline: 1px solid white;
+} 
 
 input[type="radio"] {
    background-color: #fff;
@@ -95,11 +101,11 @@ i {
 }
 
 .loginregisterLabel {
-   background-color: rgb(214, 239, 255);
+   background-color: rgb(32, 46, 77);
    padding: 15px;
    border-radius: 5px;
 }
 
 .loginregisterLabel:has(> input:checked) {
-   background-color:rgb(142, 199, 235);
+   background-color:#5568FE;
 }
