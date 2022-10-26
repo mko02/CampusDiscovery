@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 
-import { Account, CreateEvent, Dashboard, Event, Header, Home, Welcome } from "./components/exportPages";
+import {
+  Account,
+  CreateEvent,
+  Dashboard,
+  Event,
+  Header,
+  Home,
+  Welcome
+} from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
 import "./app.css";
@@ -49,7 +57,9 @@ function App() {
             element={
               <>
                 <Header></Header>
-                <CreateEvent />
+                <div className="content">
+                  <CreateEvent />
+                </div>
               </>
             }
           />
