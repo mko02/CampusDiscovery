@@ -55,12 +55,9 @@ export function CreateEvent() {
         defaultValue={date}
       />
       <br></br>
-
       <button type="submit" className="button">
         Submit
       </button>
-      <form />
-      <div />
     </div>
   );
 }
