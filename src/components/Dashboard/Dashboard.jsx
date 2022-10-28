@@ -1,39 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { ref, get } from 'firebase/database';
-import { db, getAnyEvent } from '../../firebase';
+import React, { useEffect, useState } from "react";
+import { getAnyEvent } from '../../firebase';
 import { EventCard } from '../EventCard/EventCard';
+import "./Dashboard.css";
+import ReactPaginate from 'react-paginate';
 
 export function Dashboard(){
     const [ events, setEvents ] = useState([]);
     const [ content, setContent ] = useState([]);
     const [ hasLoaded, setLoaded ] = useState(false);
+    const [ pageNumber, setPageNumber ] = useState(0);
+    
+    const eventsPerPage = 10;
+    const pagesVisited = pageNumber * eventsPerPage;
+    const displayEvents = events
+        .slice(pagesVisited, pagesVisited + eventsPerPage)
+        .map(function(obj, i){
+            return <div className="gridCard" key={obj.key}><EventCard event={obj.data} /></div>;
+        })
+        
+        
 
     var eventList = [];
 
-    useEffect(() => {
+    function getEvents() {
         if(!hasLoaded) {
             getAnyEvent().then((snap) => {
 
                 eventList = []
                 const value = snap.val()
-                console.log(value)
                 for (let event in value) {
-                    eventList.push([value[event].title, value[event].timeStart])
+                    eventList.push({key: event, data: value[event]})
                 }
                 console.log(eventList);
                 setEvents(eventList);
                 setLoaded(true);
             })
         }
+    }
+
+    useEffect(() => {
+        getEvents()
     }, []);
+
+    const pageCount = Math.ceil(events.length / eventsPerPage)
+
+    function changePage({selected}) {
+        setPageNumber(selected)
+    }
 
     return (
         <div>
             <h1>Dashboard:</h1>
-            <div>
-                {events.map(function(obj, i){
-                    return <EventCard title={obj[0]} timeStart = {obj[1]} key={i} />;
-                })}
+            <div className="gridContainer">
+                {displayEvents}
+            </div>
+            <div className="paginationContainer">
+                <ReactPaginate 
+                    previousLabel = {"Previous"}
+                    nextLabel = {"Next"}
+                    pageCount = {pageCount}
+                    onPageChange= {changePage}
+                    containerClassName = {"pageButtons"}
+                    activeClassName = {"paginationActive"}
+                />
             </div>
         </div>
     )

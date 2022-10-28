@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import {
   Account,
   CreateEvent,
-  Dashboard,
-  Event,
+  Dashboard, EditEvent, Event,
   Header,
   Home,
   Welcome
@@ -59,6 +58,17 @@ function App() {
                 <Header></Header>
                 <div className="content">
                   <CreateEvent />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/EditEvent"
+            element={
+              <>
+                <Header></Header>
+                <div className="content">
+                  <EditEvent />
                 </div>
               </>
             }
