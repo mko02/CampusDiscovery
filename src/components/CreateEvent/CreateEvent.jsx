@@ -1,62 +1,66 @@
-import React, { Component } from "react";
-import {Link } from "react-router-dom";
+import React, { Component, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./CreateEvent.css";
 
+export function CreateEvent() {
+  const [date, setDate] = useState("");
+  useEffect(() => {
+    let d = new Date();
+    let today = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+      .toISOString()
+      .substring(0, 16);
+    console.log(today);
+    setDate(today);
+  }, []);
 
-export function CreateEvent(){
-        return (
-            <div>
-                <h1>Create Event:</h1>
-                <p>Input boxes</p>
-        <div class="container">
-            <form action="/action_page.php"/>
-            <div class="form-group"/>
-            <label for="eventTitle">Title</label>
-            <input type="eventTitle" class="form-control" id="eventTitle" placeholder="Enter Title" name="eventTitle"/>
-        </div>
-        <div class="form-group">
-            <label for="organizerFullName"> Full Name :</label>
-            <input type="organizerFullName" class="form-control" id="organizerFullName" placeholder="Enter Your Full Name" name="organizerFullName"/>
-            </div>
-            <div class="form-group">
-                <label for="eventLocation">Location:</label>
-                <input type="eventLocation" class="form-control" id="eventLocation" placeholder="Enter Event Location" name="eventLocation"/>
+  return (
+    <div>
+      <h1>Create Event:</h1>
+      <label htmlFor="eventTitle">Title</label>
+      <input
+        type="text"
+        id="eventTitle"
+        placeholder="Title of Event"
+        name="eventTitle"
+      />
+      <label htmlFor="eventDescription">Event Description: </label>
+      <textarea
+        id="eventDescription"
+        name="evetDescription"
+        rows="5"
+        cols="33"
+        placeholder="Event Description"
+      ></textarea>
+      <label htmlFor="eventLocation">Location:</label>
+      <input
+        type="text"
+        id="eventLocation"
+        placeholder="Enter Event Location"
+        name="eventLocation"
+      />
+      <label htmlFor="eventStartTime">Event Start</label>
+      <input
+        type="datetime-local"
+        id="eventstartTime"
+        placeholder="Enter Event Start Time"
+        name="eventStartTime"
+        defaultValue={date}
+      />
+      <label htmlFor="eventEndTime">Event End</label>
+      <input
+        type="datetime-local"
+        id="eventEndTime"
+        placeholder="Enter Event End Time"
+        name="eventEndTime"
+        defaultValue={date}
+      />
+      <br></br>
 
-                </div>
-                <div class="form-group">
-                <label for="eventStartTime"> Event Start Time:</label>
-                <input type="eventstartTime" class="form-control" id="eventstartTime" placeholder="Enter Event Start Time" name="eventStartTime"/>
-
-                </div>
-               
-                <div class="form-group">
-                <label for="eventEndTime"> Event End Time:</label>
-                <input type="eventEndTime" class="form-control" id="eventEndTime" placeholder="Enter Event End Time" name="eventEndTime"/>
-
-                </div>
-
-
-
-
-                <label for="eventDescription">Event Description: </label>
-                <textarea id="eventDescription" name="evetDescription" rows="5" cols="33"></textarea>
-                <br></br>
-
-                <button type="submit" class="button">Submit</button>
-                <form/>
-                <div/>
-                
-                
-
-
-
-
-            </div>
-               
-                
-
-
-
-                
-        )
+      <button type="submit" className="button">
+        Submit
+      </button>
+      <form />
+      <div />
+    </div>
+  );
 }

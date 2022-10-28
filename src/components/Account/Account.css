@@ -21,7 +21,7 @@ span {
    font-size: 12px;
 }
 
-button {
+button, .btn {
    border-radius: 20px;
    border: none;
    background: #5568FE;
@@ -57,19 +57,14 @@ input {
    border: black;
    border-radius: 5px;
    color: white;
+   outline: none;
    font-family: 'Fira Sans';
+   line-height: 16px;
+   font-size: 16px;
 }
 
-input[type="text"]:active {
-   outline: 1px solid white;
-} 
-
 input[type="radio"] {
-   background-color: #fff;
-   font: inherit;
-   color: currentColor;
-   width: 1em;
-   border: 0.15em solid currentColor;
+   display: none;
 }
 
 label {
@@ -88,6 +83,8 @@ label {
    display: block;
    font-weight: bold;
    margin-top: 15px;
+   margin-bottom: 0px;
+   font-size: 14px;
 }
 
 i {
@@ -104,8 +101,47 @@ i {
    background-color: rgb(32, 46, 77);
    padding: 15px;
    border-radius: 5px;
+   width: 70px;
+   display: inline-block;
+   font-size: 16px;
+   line-height: 16px;
+   transition: 0.2s all linear;
 }
 
 .loginregisterLabel:has(> input:checked) {
    background-color:#5568FE;
+}
+
+h3 {
+   width: 290px;
+   padding-bottom: 10px;
+   margin-left: auto;
+   margin-right: auto;
+   border-bottom: 4px dotted #8185a1;
+}
+
+.radiospan {
+   height: 115px;
+   display: flex;
+   align-items: center;
+   display: inline-block;
+   text-align: center;
+   width: 90px;
+   background-color:rgb(32, 46, 77);
+   border-radius: 10px;
+   padding-top: 5px;
+   margin-top: 20px;
+   box-sizing: border-box;
+   border: 4px dotted rgb(32, 46, 77);
+   transition: 0.2s all linear;
+   letter-spacing: 0.3px;
+}
+
+.radiospan:has(> input:checked ) {
+   background-color:rgb(85,104,254);
+   border: 4px dotted rgb(63, 75, 170);
+}
+
+.btn {
+   text-decoration: none;
 }
