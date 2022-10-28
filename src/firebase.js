@@ -69,3 +69,19 @@ export const getEvent = async (id) => {
 export const getAnyEvent = async () => {
     return get(ref(db, "events/"));
 }
+
+export const createRandomEvent = async () => {
+    let id = randomID();
+    return set(ref(db, `/events/${randomID()}`), {
+        description: "Description of " + id,
+        title: "Free " + id,
+        timeStart: 1666390555,
+        timeEnd: 1666490555,
+        host: "CGh2YpX6lAh9eS6UW5Q2aqPJxLo2",
+        location: "Secret Location",
+    })
+}
+
+function randomID() {
+    return Math.random().toString(36).substring(2);
+}
