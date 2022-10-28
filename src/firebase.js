@@ -86,6 +86,20 @@ function randomID() {
     return Math.random().toString(36).substring(2);
 }
 
+export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
+    console.log(title);
+    let actualTimeStart = new Date(timeStart).getTime()/1000;
+    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
+    return set(ref(db, `/events/${id}`), {
+        title: title,
+        description: description, 
+        location: location,
+        timeStart: actualTimeStart,
+        timeEnd: actualTimeEnd,
+        host: host
+    })
+}
+
 export const getUser = async (id) => {
     return get(ref(db, `/users/${id}`));
 }

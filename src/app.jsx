@@ -63,7 +63,7 @@ function App() {
             }
           />
           <Route
-            path="/EditEvent"
+            path="/editevent/:id"
             element={
               <>
                 <Header></Header>

@@ -4,13 +4,25 @@
     height: 100px;
     width: 250px;
     background-color: rgba(44, 49, 58, 0.8);
-    padding-top: 10px;
-    box-shadow: -2px 2px 10px 0px rgba(0,0,0,0.3);
+    padding-top: 5px;
+    box-shadow: -2px 2px 10px 0px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
 }
 
 .eventtime {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
     margin-bottom: 0px;
     margin-top: 0px;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.eventtitle {
+    color: white;
+    margin-top: 15px;
 }

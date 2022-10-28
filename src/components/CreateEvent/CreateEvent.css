@@ -34,8 +34,9 @@ textarea {
     resize: none;
  }
 
-create_event_button {
+.create_event_button {
     width: 60%;
     margin: auto;
     padding: 10px;
 }
+
