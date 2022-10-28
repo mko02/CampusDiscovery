@@ -36,12 +36,17 @@
     background-color: rgba(44, 49, 58, 0.8);;
 }
 
+.paginationContainer {
+    text-align: center;
+}
+
 .pageButtons {
-    width: 80%;
+    width: 100%;
     height: 40%;
     list-style: none;
     display: flex;
     justify-content: center;
+    padding-inline-start: 0px;
 }
 
 .pageButtons a {

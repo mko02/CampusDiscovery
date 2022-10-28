@@ -54,7 +54,7 @@ export function Dashboard(){
             <div className="gridContainer">
                 {displayEvents}
             </div>
-            <div>
+            <div className="paginationContainer">
                 <ReactPaginate 
                     previousLabel = {"Previous"}
                     nextLabel = {"Next"}
