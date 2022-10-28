@@ -11,4 +11,6 @@
 .eventtime {
     color: rgba(255,255,255,0.7);
     font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }

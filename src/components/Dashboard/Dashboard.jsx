@@ -31,7 +31,7 @@ export function Dashboard(){
             <h1>Dashboard:</h1>
             <div className="gridContainer">
                 {events.map(function(obj, i){
-                    return <div className="gridCard" key={obj.key}><EventCard event={obj.data} /></div>;
+                    return <a key={obj.key} className="gridCard" href={`/#/event/${obj.key}`}><div><EventCard event={obj.data} /></div></a>;
                 })}
             </div>
         </div>
