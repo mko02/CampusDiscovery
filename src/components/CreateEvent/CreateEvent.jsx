@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { checkLoggedIn } from "../../firebase";
 import "./CreateEvent.css";
 
 export function CreateEvent() {
   const [date, setDate] = useState("");
   useEffect(() => {
+    checkLoggedIn();
     let d = new Date();
     let today = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
       .toISOString()

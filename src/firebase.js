@@ -3,8 +3,7 @@ import {
 } from "firebase/app";
 import {
     createUserWithEmailAndPassword,
-    getAuth,
-    signInWithEmailAndPassword,
+    getAuth, onAuthStateChanged, signInWithEmailAndPassword,
     signOut
 } from "firebase/auth";
 import {
@@ -102,4 +101,27 @@ export const editEvent = async (id, title, description, location, timeStart, tim
 
 export const getUser = async (id) => {
     return get(ref(db, `/users/${id}`));
+}
+
+export const checkLoggedIn = async () => { 
+    auth.onAuthStateChanged(function(user) {
+        if(!user) {
+            window.location.replace("/#/account");
+        } else {
+            console.log(auth.currentUser)
+        }
+    })
+}
+
+export const getLoggedInUser = async() => {
+    auth.onAuthStateChanged(function(user) {
+        console.log(user);
+        return user;
+    })
+}
+
+export const logout = async() => {
+    auth.signOut().then(() => {
+        window.location.reload();
+    })
 }
