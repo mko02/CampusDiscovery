@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { ref, get } from 'firebase/database';
-import { db, getAnyEvent } from '../../firebase';
+import React, { useEffect, useState } from "react";
+import { getAnyEvent } from '../../firebase';
 import { EventCard } from '../EventCard/EventCard';
+import "./Dashboard.css";
 
 export function Dashboard(){
     const [ events, setEvents ] = useState([]);
@@ -16,9 +16,8 @@ export function Dashboard(){
 
                 eventList = []
                 const value = snap.val()
-                console.log(value)
                 for (let event in value) {
-                    eventList.push([value[event].title, value[event].timeStart])
+                    eventList.push({key: event, data: value[event]})
                 }
                 console.log(eventList);
                 setEvents(eventList);
@@ -30,9 +29,9 @@ export function Dashboard(){
     return (
         <div>
             <h1>Dashboard:</h1>
-            <div>
+            <div className="gridContainer">
                 {events.map(function(obj, i){
-                    return <EventCard title={obj[0]} timeStart = {obj[1]} key={i} />;
+                    return <div className="gridCard" key={obj.key}><EventCard event={obj.data} /></div>;
                 })}
             </div>
         </div>

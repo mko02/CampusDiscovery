@@ -1,0 +1,10 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: 300px 300px;
+    width: 600px;
+    margin: auto;
+}
+
+.gridCard {
+    margin: 10px auto;
+}
