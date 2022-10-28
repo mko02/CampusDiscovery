@@ -100,7 +100,6 @@ export const addEvent = async (title, description, location, timeStart, timeEnd,
 }
 
 export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
-    console.log(title);
     let actualTimeStart = new Date(timeStart).getTime()/1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${id}`), {
@@ -122,15 +121,8 @@ export const checkLoggedIn = async () => {
         if(!user) {
             window.location.replace("/#/account");
         } else {
-            console.log(auth.currentUser)
+            
         }
-    })
-}
-
-export const getLoggedInUser = async() => {
-    auth.onAuthStateChanged(function(user) {
-        console.log(user);
-        return user;
     })
 }
 

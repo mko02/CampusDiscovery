@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
 import { checkLoggedIn, getAnyEvent } from "../../firebase";
 import { EventCard } from "../EventCard/EventCard";
 import "./Dashboard.css";
@@ -37,7 +37,7 @@ export function Dashboard() {
         for (let event in value) {
           eventList.push({ key: event, data: value[event] });
         }
-        console.log(eventList);
+        eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
         setEvents(eventList);
         setLoaded(true);
       });
@@ -57,9 +57,9 @@ export function Dashboard() {
   return (
     <div>
       <h1>Dashboard:</h1>
-      <div>
+      <div style={{marginBottom: "10px"}}>
         <a href="/#/createEvent" className='button_style'>
-          CreateEvent
+          Create Event
         </a>
       </div>
       <div className="gridContainer">{displayEvents}</div>

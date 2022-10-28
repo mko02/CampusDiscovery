@@ -1,9 +1,8 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { Component, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { checkLoggedIn } from "../../firebase";
+import { addEvent, auth, checkLoggedIn, getUser } from "../../firebase";
 import "./CreateEvent.css";
-import { addEvent, getUser, auth} from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 export function CreateEvent() {
   const [title, setTitle] = useState("");
   const [description, setDescr] = useState("");
@@ -89,7 +88,6 @@ export function CreateEvent() {
           ).then((res) => {
             window.location.assign(`/#/event/dashboard`);
           });
-          console.log("submit pressed")
         }}>
           Submit
         </button>
