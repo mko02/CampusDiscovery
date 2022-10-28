@@ -54,13 +54,11 @@ export function CreateEvent() {
         name="eventEndTime"
         defaultValue={date}
       />
-      <br></br>
-
-      <button type="submit" className="button">
-        Submit
-      </button>
-      <form />
-      <div />
+      <div className = "create_event_button">
+        <button type="submit">
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
