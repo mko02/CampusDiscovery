@@ -1,6 +1,7 @@
 .toLeft {
     margin-top: 60px;
     text-align: left;
+    align-items: left;
 }
 
 .button{

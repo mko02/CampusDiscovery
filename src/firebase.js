@@ -87,6 +87,7 @@ function randomID() {
 }
 
 export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
+    console.log(title);
     let actualTimeStart = new Date(timeStart).getTime()/1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${id}`), {
@@ -97,4 +98,8 @@ export const editEvent = async (id, title, description, location, timeStart, tim
         timeEnd: actualTimeEnd,
         host: host
     })
+}
+
+export const getUser = async (id) => {
+    return get(ref(db, `/users/${id}`));
 }

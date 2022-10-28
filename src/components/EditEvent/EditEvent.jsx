@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { editEvent, getEvent } from "../../firebase";
 import "./EditEvent.css";
@@ -11,33 +11,38 @@ export function EditEvent() {
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
   const [host, setHost] = useState("");
-  getEvent(id)
-    .then((snap) => {
-      if (snap.exists()) {
-        const val = snap.val();
-        setTitle(val.title);
-        setDescr(val.description);
-        setLocation(val.location);
-        setTimeStart(
-          new Date(
-            val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000
-          )
-            .toISOString()
-            .substring(0, 16)
-        );
-        setTimeEnd(
-          new Date(val.timeEnd * 1000 - new Date().getTimezoneOffset() * 60000)
-            .toISOString()
-            .substring(0, 16)
-        );
-        setHost(val.host);
-      } else {
-        window.location.replace("/#/dashboard");
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  useEffect(() => {
+    getEvent(id)
+      .then((snap) => {
+        if (snap.exists()) {
+          const val = snap.val();
+          setTitle(val.title);
+          setDescr(val.description);
+          setLocation(val.location);
+          setTimeStart(
+            new Date(
+              val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .substring(0, 16)
+          );
+          setTimeEnd(
+            new Date(
+              val.timeEnd * 1000 - new Date().getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .substring(0, 16)
+          );
+          setHost(val.host);
+        } else {
+          window.location.replace("/#/dashboard");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
       <h1>Edit Event</h1>
@@ -47,8 +52,11 @@ export function EditEvent() {
         id="eventTitle"
         placeholder="Title of Event"
         name="eventTitle"
-        defaultValue={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={title}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          console.log(e.target.value);
+        }}
       />
       <label htmlFor="eventDescription">Event Description: </label>
       <textarea
@@ -57,7 +65,7 @@ export function EditEvent() {
         rows="5"
         cols="33"
         placeholder="Event Description"
-        defaultValue={description}
+        value={description}
         onChange={(e) => setDescr(e.target.value)}
       ></textarea>
       <label htmlFor="eventLocation">Location:</label>
@@ -66,7 +74,7 @@ export function EditEvent() {
         id="eventLocation"
         placeholder="Enter Event Location"
         name="eventLocation"
-        defaultValue={location}
+        value={location}
         onChange={(e) => setLocation(e.target.value)}
       />
       <label htmlFor="eventStartTime">Event Start</label>
@@ -75,7 +83,7 @@ export function EditEvent() {
         id="eventstartTime"
         placeholder="Enter Event Start Time"
         name="eventStartTime"
-        defaultValue={timeStart}
+        value={timeStart}
         onChange={(e) => setTimeStart(e.target.value)}
       />
       <label htmlFor="eventEndTime">Event End</label>
@@ -84,7 +92,7 @@ export function EditEvent() {
         id="eventEndTime"
         placeholder="Enter Event End Time"
         name="eventEndTime"
-        defaultValue={timeEnd}
+        value={timeEnd}
         onChange={(e) => setTimeEnd(e.target.value)}
       />
       <br></br>
