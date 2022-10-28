@@ -46,7 +46,7 @@ export function Account() {
 
       {status === 1 && (
         <>
-          <h3>Register a new account</h3>
+          <h3 className="accountHeader">Register a new account</h3>
           <label className="fieldLabel">Choose type of account</label>
           <label htmlFor="user" className="radiospan">
             <input
@@ -140,7 +140,7 @@ export function Account() {
       )}
       {status === 0 && (
         <>
-          <h3>Login</h3>
+          <h3 className="accountHeader">Login</h3>
           <label htmlFor="email" className="fieldLabel">Email:</label>
           <input
             type="email"

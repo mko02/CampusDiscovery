@@ -33,3 +33,10 @@ textarea {
     font-size: 16px;
     resize: none;
  }
+
+.create_event_button {
+    width: 60%;
+    margin: auto;
+    padding: 10px;
+}
+

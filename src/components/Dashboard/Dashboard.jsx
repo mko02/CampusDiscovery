@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import ReactPaginate from 'react-paginate';
 import { getAnyEvent } from '../../firebase';
 import { EventCard } from '../EventCard/EventCard';
 import "./Dashboard.css";
-import ReactPaginate from 'react-paginate';
 
 export function Dashboard(){
     const [ events, setEvents ] = useState([]);

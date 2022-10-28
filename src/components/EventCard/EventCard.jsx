@@ -6,7 +6,7 @@ export function EventCard(props) {
 
   return (
     <div className="eventcard">
-      <h2 className="eventtitle">{props.event.title}</h2>
+      <h3 className="eventtitle">{props.event.title}</h3>
       <p className="eventtime">{new Date(props.event.timeStart * 1000 - new Date().getTimezoneOffset() * 60000).toLocaleString()}</p>
     </div>
   );
