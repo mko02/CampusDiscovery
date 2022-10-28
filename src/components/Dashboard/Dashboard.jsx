@@ -13,11 +13,12 @@ export function Dashboard(){
     useEffect(() => {
         if(!hasLoaded) {
             getAnyEvent().then((snap) => {
-                console.log(snap)
+
                 eventList = []
                 const value = snap.val()
+                console.log(value)
                 for (let event in value) {
-                    eventList.push(value[event].title)
+                    eventList.push([value[event].title, value[event].timeStart])
                 }
                 console.log(eventList);
                 setEvents(eventList);
@@ -31,7 +32,7 @@ export function Dashboard(){
             <h1>Dashboard:</h1>
             <div>
                 {events.map(function(obj, i){
-                    return <EventCard title={obj} key={i} />;
+                    return <EventCard title={obj[0]} timeStart = {obj[1]} key={i} />;
                 })}
             </div>
         </div>
