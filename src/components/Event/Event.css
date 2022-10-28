@@ -4,7 +4,21 @@
     align-items: left;
 }
 
-.button{
+.backButton{
     position: absolute;
     left: 30;
+    height: 38.5px;
+}
+
+.editButton {
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    border: 1px solid rgba(44, 49, 58, 0.8);
+    text-align: center;
+    position: absolute;
+    right: 180px;
+}
+
+.header {
 }

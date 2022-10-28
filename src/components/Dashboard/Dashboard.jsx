@@ -15,7 +15,7 @@ export function Dashboard(){
     const displayEvents = events
         .slice(pagesVisited, pagesVisited + eventsPerPage)
         .map(function(obj, i){
-            return <div className="gridCard" key={obj.key}><EventCard event={obj.data} /></div>;
+            return <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}><EventCard event={obj.data} /></a>;
         })
         
         
