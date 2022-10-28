@@ -6,6 +6,7 @@ import "./Event.css";
 export function Event() {
   const [title, setTitle] = useState("");
   const [description, setDescr] = useState("");
+  const [location, setLocation] = useState("");
   const [timeStart, setStartTime] = useState("");
   const [timeEnd, setEndTime] = useState("");
   const [hostID, setHostID] = useState("");
@@ -23,10 +24,8 @@ export function Event() {
         const val = snap.val();
         setTitle(val.title);
         setDescr(val.description);
-
-        let startTimeStr = new Date(
-          val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000
-        ).toLocaleString();
+        setLocation(val.location);
+        let startTimeStr = new Date(val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000).toLocaleString();
 
         let startTimeStrAMorPM = startTimeStr.substring(
           startTimeStr.length - 3
@@ -97,6 +96,7 @@ export function Event() {
       <div>
         <p class="toLeft">Host: {host}</p>
         <p class="toLeft">Description: {description}</p>
+        <p class="toLeft">Location: {location}</p>
         <p class="toLeft"> Start Time: {timeStart}</p>
         <p class="toLeft">End Time: {timeEnd}</p>
       </div>

@@ -11,6 +11,7 @@ import {
     push,
     ref, set
 } from "firebase/database";
+import { Title } from "./components/Header/Header.styled";
 const firebaseConfig = {
     apiKey: "AIzaSyCVBNJNQqsGTGIyxRgFwWwD9lnkZAMg5i8",
     authDomain: "gt-campus-discovery.firebaseapp.com",
@@ -83,6 +84,19 @@ export const createRandomEvent = async () => {
 
 function randomID() {
     return Math.random().toString(36).substring(2);
+}
+
+export const addEvent = async (title, description, location, timeStart, timeEnd, host) => {
+    let actualTimeStart = new Date(timeStart).getTime()/1000;
+    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
+    return set(ref(db, `/events/${randomID()}`), {
+        description: description,
+        title: title,
+        timeStart: actualTimeStart,
+        timeEnd: actualTimeEnd,
+        host: host,
+        location: location,
+    })
 }
 
 export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
