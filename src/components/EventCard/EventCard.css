@@ -1,7 +1,12 @@
-div {
-    border-color: red;
+.eventcard {
+    border-radius: 10px;
+    border: 1px white;
+    height: 100px;
+    width: 250px;
+    background-color: rgba(45,44,44,50);
+    padding-top: 25px;
 }
 
-h1 {
-    border-color: red;
+.eventtitle {
+    
 }

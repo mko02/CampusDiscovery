@@ -66,7 +66,6 @@ export const registerWithEmailAndPassword = async (name, accountType, email, pas
 export const getEvent = async (id) => {
     return get(ref(db, `/events/${id}`));
 }
-
 export const getAnyEvent = async () => {
     return get(ref(db, "events/"));
 }
