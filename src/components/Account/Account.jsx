@@ -2,7 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Component, React, useEffect, useState } from "react";
 import {
   auth,
-  getLoggedInUser,
+  getUser,
   logInWithEmailAndPassword,
   logout,
   registerWithEmailAndPassword
@@ -15,6 +15,8 @@ export function Account() {
   const [name, setName] = useState("");
   const [accountType, setAccountType] = useState("User");
   const [status, setStatus] = useState(0); // 0 is login, 1 is register
+  const [infoType, setInfoType] = useState("");
+  const [infoName, setInfoName] = useState("");
   const radioHandler = (status) => {
     setStatus(status);
   };
@@ -22,8 +24,13 @@ export function Account() {
   onAuthStateChanged(auth, (user) => {
     if (user && status == 0) {
       setStatus(3);
+      getUser(user.uid).then((res) => {
+        const value = res.val();
+        setInfoType(value.accountType);
+        setInfoName(value.name);
+      });
     }
-  })
+  });
 
   return (
     <div id="pageContainer">
@@ -222,9 +229,12 @@ export function Account() {
       {status === 3 && (
         <>
           <h2>You are logged in</h2>
+          <p>Your name: {infoName}</p>
+          <p>Role type: {infoType}</p>
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
+          <br></br>
           <button className="btn" onClick={logout}>
             Logout
           </button>

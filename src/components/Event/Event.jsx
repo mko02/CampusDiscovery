@@ -25,7 +25,7 @@ export function Event() {
         setTitle(val.title);
         setDescr(val.description);
         setLocation(val.location);
-        let startTimeStr = new Date(val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000).toLocaleString();
+        let startTimeStr = new Date(val.timeStart * 1000).toLocaleString();
 
         let startTimeStrAMorPM = startTimeStr.substring(
           startTimeStr.length - 3
@@ -35,9 +35,7 @@ export function Event() {
           startTimeStrAMorPM;
         setStartTime(startTimeStr);
 
-        let endTimeStr = new Date(
-          val.timeEnd * 1000 - new Date().getTimezoneOffset() * 60000
-        ).toLocaleString();
+        let endTimeStr = new Date(val.timeEnd * 1000).toLocaleString();
 
         let endTimeStrAMorPM = endTimeStr.substring(endTimeStr.length - 3);
         endTimeStr =

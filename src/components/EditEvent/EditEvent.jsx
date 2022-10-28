@@ -55,7 +55,6 @@ export function EditEvent() {
         value={title}
         onChange={(e) => {
           setTitle(e.target.value);
-          console.log(e.target.value);
         }}
       />
       <label htmlFor="eventDescription">Event Description: </label>
