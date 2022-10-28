@@ -85,3 +85,7 @@ export const createRandomEvent = async () => {
 function randomID() {
     return Math.random().toString(36).substring(2);
 }
+
+export const getUser = async (id) => {
+    return get(ref(db, `/users/${id}`));
+}
