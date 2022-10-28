@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { checkLoggedIn, getAnyEvent } from "../../firebase";
 import { EventCard } from "../EventCard/EventCard";
@@ -56,6 +57,11 @@ export function Dashboard() {
   return (
     <div>
       <h1>Dashboard:</h1>
+      <div>
+        <a href="/#/createEvent" className='button_style'>
+          CreateEvent
+        </a>
+      </div>
       <div className="gridContainer">{displayEvents}</div>
       <div className="paginationContainer">
         <ReactPaginate
