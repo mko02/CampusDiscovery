@@ -1,12 +1,17 @@
 import { child, get, getDatabase, ref } from "firebase/database";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getEvent } from "../../firebase";
+import { getEvent, getUser } from "../../firebase";
 import "./Event.css";
 
 export function Event() {
   const [title, setTitle] = useState("");
   const [description, setDescr] = useState("");
+  const [timeStart, setStartTime] = useState("");
+  const [timeEnd, setEndTime] = useState("");
+  const [hostID, setHostID] = useState("");
+  const [host, setHost] = useState("");
+
 
   const { id } = useParams();
 
@@ -16,6 +21,22 @@ export function Event() {
         const val = snap.val();
         setTitle(val.title);
         setDescr(val.description);
+
+        let startTimeStr = new Date(val.timeStart * 1000 - new Date().getTimezoneOffset() * 60000).toLocaleString();
+
+        let startTimeStrAMorPM = startTimeStr.substring(startTimeStr.length - 3);
+        startTimeStr = startTimeStr.substring(0, startTimeStr.length - 6) + startTimeStrAMorPM;
+        setStartTime(startTimeStr)
+
+        let endTimeStr = new Date(val.timeEnd * 1000 - new Date().getTimezoneOffset() * 60000).toLocaleString();
+
+        let endTimeStrAMorPM = endTimeStr.substring(endTimeStr.length - 3);
+        endTimeStr = endTimeStr.substring(0, endTimeStr.length - 6) + endTimeStrAMorPM;
+
+        setEndTime(endTimeStr);
+
+        setHostID(val.host);
+
       } else {
         window.location.replace("/#/dashboard")
       }
@@ -23,6 +44,14 @@ export function Event() {
     .catch((error) => {
       console.log(error);
     });
+  
+  getUser(hostID)
+    .then((snap) => {
+      if (snap.exists()) {
+        const val = snap.val()
+        setHost(val.name)
+      }
+    })
 
   return (
     <div>
@@ -39,7 +68,10 @@ export function Event() {
       </div>
       <h1>{title}</h1>
       <div>
+        <p class="toLeft">Host: {host}</p>
         <p class="toLeft">Description: {description}</p>
+        <p class="toLeft"> Start Time: {timeStart}</p>
+        <p class="toLeft">End Time: {timeEnd}</p>
       </div>
 
     </div>
