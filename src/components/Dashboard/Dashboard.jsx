@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import ReactPaginate from 'react-paginate';
 import { getAnyEvent } from '../../firebase';
 import { EventCard } from '../EventCard/EventCard';
 import "./Dashboard.css";
-import ReactPaginate from 'react-paginate';
 
 export function Dashboard(){
     const [ events, setEvents ] = useState([]);
@@ -15,7 +15,7 @@ export function Dashboard(){
     const displayEvents = events
         .slice(pagesVisited, pagesVisited + eventsPerPage)
         .map(function(obj, i){
-            return <div className="gridCard" key={obj.key}><EventCard event={obj.data} /></div>;
+            return <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}><EventCard event={obj.data} /></a>;
         })
         
         
