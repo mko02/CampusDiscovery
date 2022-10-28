@@ -60,7 +60,8 @@ export function Dashboard(){
                     nextLabel = {"Next"}
                     pageCount = {pageCount}
                     onPageChange= {changePage}
-                    containerClassName = {"pagButtons"}
+                    containerClassName = {"pageButtons"}
+                    activeClassName = {"paginationActive"}
                 />
             </div>
         </div>

@@ -9,3 +9,55 @@
     margin: 10px auto;
     text-decoration: none;
 }
+
+.pageButtons {
+    width: 80%;
+    height: 40%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.pageButtons a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid rgba(44, 49, 58, 0.8);;
+    cursor: pointer;
+}
+
+.pageButtons a:hover {
+    color: white;
+    background-color: rgba(44, 49, 58, 0.8);;
+}
+
+.paginationActive a {
+    color: white;
+    background-color: rgba(44, 49, 58, 0.8);;
+}
+
+.pageButtons {
+    width: 80%;
+    height: 40%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.pageButtons a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid rgba(44, 49, 58, 0.8);;
+    cursor: pointer;
+}
+
+.pageButtons a:hover {
+    color: white;
+    background-color: rgba(44, 49, 58, 0.8);;
+}
+
+.paginationActive a {
+    color: white;
+    background-color: rgba(44, 49, 58, 0.8);;
+}
