@@ -67,7 +67,7 @@ export function Event() {
             </svg>
           </Link>
         </div>
-        <h1>{title}</h1>
+        <h1 className="eventPageTitle">{title}</h1>
         <div className = "editButton">
           <Link to = {`/editevent/${id}`}>
               <svg width="30px" height = "30px" viewBox="0 0 700 580">

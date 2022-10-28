@@ -6,7 +6,6 @@
 
 .backButton{
     position: absolute;
-    left: 30;
     height: 38.5px;
 }
 
@@ -17,8 +16,16 @@
     border: 1px solid rgba(44, 49, 58, 0.8);
     text-align: center;
     position: absolute;
-    right: 180px;
+    right: 0px;
+    top: 0;
 }
 
 .header {
+    position: relative;
+}
+
+.eventPageTitle {
+    width: 80%;
+    display: block;
+    margin: auto;
 }
