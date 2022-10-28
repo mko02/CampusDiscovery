@@ -1,4 +1,9 @@
-.backButton {
+.toLeft {
+    margin-top: 60px;
     text-align: left;
-    width: 100%;
+}
+
+.button{
+    position: absolute;
+    left: 30;
 }

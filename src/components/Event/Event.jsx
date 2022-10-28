@@ -26,7 +26,7 @@ export function Event() {
 
   return (
     <div>
-      <div className="backButton">
+      <div className="button">
         <Link to="/dashboard">
           <svg width="30px" height = "30px">
             <g id="c185_triangle">
@@ -37,9 +37,11 @@ export function Event() {
           </svg>
         </Link>
       </div>
-      <h1>Event:</h1>
-      <h2>Title: {title}</h2>
-      <p>Description: {description}</p>
+      <h1>{title}</h1>
+      <div>
+        <p class="toLeft">Description: {description}</p>
+      </div>
+
     </div>
   );
 }
