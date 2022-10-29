@@ -31,7 +31,6 @@ export function Dashboard(){
                 for (let event in value) {
                     eventList.push({key: event, data: value[event]})
                 }
-                console.log(eventList);
                 setEvents(eventList);
                 setLoaded(true);
             })
