@@ -3,8 +3,7 @@ import {
 } from "firebase/app";
 import {
     createUserWithEmailAndPassword,
-    getAuth,
-    signInWithEmailAndPassword,
+    getAuth, onAuthStateChanged, signInWithEmailAndPassword,
     signOut
 } from "firebase/auth";
 import {
@@ -12,6 +11,7 @@ import {
     push, remove,
     ref, set
 } from "firebase/database";
+import { Title } from "./components/Header/Header.styled";
 const firebaseConfig = {
     apiKey: "AIzaSyCVBNJNQqsGTGIyxRgFwWwD9lnkZAMg5i8",
     authDomain: "gt-campus-discovery.firebaseapp.com",
@@ -86,11 +86,53 @@ function randomID() {
     return Math.random().toString(36).substring(2);
 }
 
+export const addEvent = async (title, description, location, timeStart, timeEnd, host) => {
+    let actualTimeStart = new Date(timeStart).getTime()/1000;
+    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
+    return set(ref(db, `/events/${randomID()}`), {
+        description: description,
+        title: title,
+        timeStart: actualTimeStart,
+        timeEnd: actualTimeEnd,
+        host: host,
+        location: location,
+    })
+}
+
+export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
+    let actualTimeStart = new Date(timeStart).getTime()/1000;
+    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
+    return set(ref(db, `/events/${id}`), {
+        title: title,
+        description: description, 
+        location: location,
+        timeStart: actualTimeStart,
+        timeEnd: actualTimeEnd,
+        host: host
+    })
+}
+
 export const getUser = async (id) => {
     return get(ref(db, `/users/${id}`));
 }
 
+
 export const removeEvent = async(id) => {
     console.log(`/events/${id}`);
     remove(ref(db, `/events/${id}`))
+}
+export const checkLoggedIn = async () => { 
+    auth.onAuthStateChanged(function(user) {
+        if(!user) {
+            window.location.replace("/#/account");
+        } else {
+            
+        }
+    })
+}
+
+export const logout = async() => {
+    auth.signOut().then(() => {
+        window.location.reload();
+    })
 }
