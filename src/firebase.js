@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import {
     get, getDatabase,
-    push,
+    push, remove,
     ref, set
 } from "firebase/database";
 import { Title } from "./components/Header/Header.styled";
@@ -116,6 +116,11 @@ export const getUser = async (id) => {
     return get(ref(db, `/users/${id}`));
 }
 
+
+export const removeEvent = async(id) => {
+    console.log(`/events/${id}`);
+    remove(ref(db, `/events/${id}`))
+}
 export const checkLoggedIn = async () => { 
     auth.onAuthStateChanged(function(user) {
         if(!user) {

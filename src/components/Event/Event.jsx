@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { checkLoggedIn, getEvent, getUser } from "../../firebase";
+import { getEvent, getUser, removeEvent, checkLoggedIn } from "../../firebase";
 import "./Event.css";
 
 export function Event() {
@@ -87,6 +87,17 @@ export function Event() {
                 />
               </g>
             </svg>
+          </Link>
+        </div>
+        <div className = "deleteButton" onClick = {() => removeEvent(id)}>
+          <Link to = "/dashboard">
+              <svg width="30px" height = "30px" viewBox="0 0 700 630">
+                <g id="">
+                  <path fill="#FFFFFF"
+                    fillOpacity="1"
+                  d="m495.6 95.199h-100.8v-11.199c0-12.32-10.078-22.398-22.398-22.398h-39.199c-12.32 0-22.398 10.078-22.398 22.398v11.199h-100.8c-12.32 0-22.398 10.078-22.398 22.398v11.199c0 10.387 7.1953 19.105 16.832 21.609l-0.035156 319.99c0 12.32 10.078 22.398 22.398 22.398h252c12.32 0 22.398-10.078 22.398-22.398l0.003907-320c9.6133-2.5156 16.801-11.223 16.801-21.598v-11.199c0-12.32-10.078-22.402-22.398-22.402zm-168-11.199c0-3.0352 2.5664-5.6016 5.6016-5.6016h39.199c3.0352 0 5.6016 2.5664 5.6016 5.6016v11.199h-50.398zm156.8 386.4c0 3.0352-2.5664 5.6016-5.6016 5.6016h-252c-3.0352 0-5.6016-2.5664-5.6016-5.6016l0.035156-319.2h263.16zm16.801-341.6c0 3.0352-2.5664 5.6016-5.6016 5.6016l-285.6-0.003906c-3.0352 0-5.6016-2.5664-5.6016-5.6016v-11.199c0-3.0352 2.5664-5.6016 5.6016-5.6016h285.6c3.0352 0 5.6016 2.5664 5.6016 5.6016z"/>
+                </g>
+              </svg>
           </Link>
         </div>
       </div>
