@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { editEvent, getEvent } from "../../firebase";
+import { editEvent, getEvent, checkEditPermission } from "../../firebase";
 import "./EditEvent.css";
 
 export function EditEvent() {
@@ -16,6 +16,7 @@ export function EditEvent() {
       .then((snap) => {
         if (snap.exists()) {
           const val = snap.val();
+          checkEditPermission(id);
           setTitle(val.title);
           setDescr(val.description);
           setLocation(val.location);

@@ -131,6 +131,34 @@ export const checkLoggedIn = async () => {
     })
 }
 
+export const checkEditPermission = async (eventID) => { 
+    auth.onAuthStateChanged(function(user) {
+        if (!user) {
+            window.location.replace("/#/account");
+        }
+        getUser(user.uid).then((snap) => {
+            if (snap.exists()) {
+
+                getEvent(eventID).then((eventSnap) => {
+                    if (eventSnap.val().host === user.uid || snap.val().accountType === "Administrator") {
+
+                    } else {
+                        window.location.replace("/#/dashboard");
+                    }
+
+                })
+            }
+        });
+
+        
+    })
+
+
+
+
+
+}
+
 export const logout = async() => {
     auth.signOut().then(() => {
         window.location.reload();
