@@ -22,6 +22,7 @@ export function Event() {
   const [userID, setUserID] = useState("");
   const [userHost, setUserHost] = useState(false);
   const [userType, setUserType] = useState("");
+  const [currentAttending, setCurrentAttending] = useState(0);
   const [inviteOnly, setInviteOnly] = useState(false);
   const [capacity, setCapacity] = useState(0);
   const { id } = useParams();
@@ -57,6 +58,28 @@ export function Event() {
         setCapacity(val.capacity)
         setInviteOnly(val.inviteOnly)
         setHostID(val.host);
+        
+
+        var numAttending = 0;
+
+        for (let user in val.users) {
+          if (val.users[user].rsvpStatus === "Will Attend") {
+            numAttending += 1;
+          } else if (val.users[user].rsvpStatus === "Maybe") {
+            numAttending += 1;
+          }
+        }
+
+        setCurrentAttending(numAttending);
+
+        if (val.capacity) {
+          setCapacity(val.capacity);
+
+        } else {
+          setCapacity(0);
+        }
+
+
       } else {
         window.location.replace("/#/dashboard");
       }
@@ -149,7 +172,7 @@ export function Event() {
         <p class="toLeft"> Start Time: {timeStart}</p>
         <p class="toLeft">End Time: {timeEnd}</p>
         <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
-        <p class="toLeft">Event Capacity: {String(capacity)}</p>
+        {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
       { userHost && (<RSVPAdmin eventID={id}/>)}
 
