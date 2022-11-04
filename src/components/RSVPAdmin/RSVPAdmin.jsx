@@ -1,6 +1,6 @@
 import { React, useState, useEffect, Button } from "react";
 import { useParams} from "react-router-dom";
-import { addRSVP, getRSVP, auth } from "../../firebase";
+import { getRSVP, getUser } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import "./RSVPAdmin.css";
 
@@ -43,18 +43,24 @@ export function RSVPAdmin() {
                 const value = snap.val();
                 for (let user in value.users) {
                     let status = value.users[user].rsvpStatus
-                    if (status === "Will Attend") {
-                        willList.push(user);
-                    } else if (status === "Maybe") {
-                        maybeList.push(user);
-                    } else {
-                        wontList.push(user);
-                    }
+
+                    getUser(user).then((userDetails) => {
+                        if (userDetails.exists()) {
+                            const name = userDetails.val().name;
+                            if (status === "Will Attend") {
+                                willList.push(name);
+                            } else if (status === "Maybe") {
+                                maybeList.push(name);
+                            } else {
+                                wontList.push(name);
+                            }
+                            setWill(willList);
+                            setMaybe(maybeList);
+                            setWont(wontList);
+                            setLoaded(true);
+                        }
+                    });
                 }
-                setWill(willList);
-                setMaybe(maybeList);
-                setWont(wontList);
-                setLoaded(true);
             });
         }
     }
