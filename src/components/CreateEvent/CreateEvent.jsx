@@ -109,7 +109,7 @@ export function CreateEvent() {
             timeStart,
             timeEnd,
             host,
-            inviteOnly
+            inviteOnly,
             capacity
           ).then((res) => {
             window.location.assign(`/#/event/dashboard`);
