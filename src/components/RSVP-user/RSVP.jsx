@@ -36,9 +36,9 @@ export function RSVP(props) {
           }
         }
 
-        console.log(numAttending);
+        //console.log(numAttending);
         if (value.capacity) {
-          console.log("checking")
+          //console.log("checking")
           if ((numAttending.toString()) >= value.capacity) {
             if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {
               setRSVPAvail(1);
