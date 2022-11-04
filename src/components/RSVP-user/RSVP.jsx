@@ -35,7 +35,6 @@ export function RSVP(props) {
             numAttending += 1;
           }
         }
-
         if (value.capacity) {
           if ((numAttending.toString()) >= value.capacity) {
             if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {

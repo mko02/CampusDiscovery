@@ -12,9 +12,9 @@ export function RSVPAdmin(props) {
     const [ wont, setWont ] = useState([]);
     const id = props.eventID;
 
-    var willList = []
-    var maybeList = []
-    var wontList = []
+    var willList = [];
+    var maybeList = [];
+    var wontList = [];
 
     const willListRender = will.map(function (item, index) {
         return (
@@ -34,13 +34,22 @@ export function RSVPAdmin(props) {
         );
     });
 
+    function loopDone(willl, maybel, wontl){
+        setWill(willl);
+        setMaybe(maybel);
+        setWont(wontl)
+        
+    }
+
     function getAttendeeList() {
         if (!hasLoaded) {
-            willList = [];
-            maybeList = [];
-            wontList = [];
+            setLoaded(true);
             getRSVP(id).then((snap) => {
+                willList = [];
+                maybeList = [];
+                wontList = [];
                 const value = snap.val();
+                let counter = 0;
                 for (let user in value.users) {
                     let status = value.users[user].rsvpStatus
 
@@ -48,17 +57,23 @@ export function RSVPAdmin(props) {
                         if (userDetails.exists()) {
                             const name = userDetails.val().name;
                             if (status === "Will Attend") {
-                                willList.push(name);
+                                if (!willList.includes(name)) {
+                                    willList.push(name);
+                                }
                             } else if (status === "Maybe") {
-                                maybeList.push(name);
+                                if (!maybeList.includes(name)) {
+                                    maybeList.push(name);
+                                }
                             } else {
-                                wontList.push(name);
+                                if (!wontList.includes(name)) {
+                                    wontList.push(name);
+                                }
                             }
-                            setWill(willList);
-                            setMaybe(maybeList);
-                            setWont(wontList);
-                            setLoaded(true);
                         }
+                        if (counter == Object.keys(value.users).length  - 1) {
+                            loopDone(willList, maybeList, wontList);
+                        }
+                        counter++;
                     });
                 }
             });
