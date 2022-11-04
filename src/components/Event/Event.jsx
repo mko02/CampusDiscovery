@@ -22,6 +22,7 @@ export function Event() {
   const [userID, setUserID] = useState("");
   const [userHost, setUserHost] = useState(false);
   const [userType, setUserType] = useState("");
+  const [inviteOnly, setInviteOnly] = useState(false);
 
   const { id } = useParams();
 
@@ -53,7 +54,8 @@ export function Event() {
           endTimeStr.substring(0, endTimeStr.length - 6) + endTimeStrAMorPM;
 
         setEndTime(endTimeStr);
-
+        
+        setInviteOnly(val.inviteOnly)
         setHostID(val.host);
       } else {
         window.location.replace("/#/dashboard");
@@ -146,6 +148,7 @@ export function Event() {
         <p class="toLeft">Location: {location}</p>
         <p class="toLeft"> Start Time: {timeStart}</p>
         <p class="toLeft">End Time: {timeEnd}</p>
+        <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
       </div>
     </div>
   );
