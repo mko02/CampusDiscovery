@@ -151,8 +151,8 @@ export function Event() {
         <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
         <p class="toLeft">Event Capacity: {String(capacity)}</p>
       </div>
-      { userHost && (<RSVPAdmin />)}
-      
+      { userHost && (<RSVPAdmin eventID={id}/>)}
+
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
     </div>
   );
