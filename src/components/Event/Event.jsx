@@ -10,6 +10,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 
 import "./Event.css";
+import { RSVPAdmin } from "../exportPages";
 
 export function Event() {
   const [title, setTitle] = useState("");
@@ -150,6 +151,8 @@ export function Event() {
         <p class="toLeft">End Time: {timeEnd}</p>
         <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
       </div>
+      { userHost && (<RSVPAdmin />)}
+
     </div>
   );
 }
