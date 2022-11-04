@@ -6,7 +6,8 @@ import {
   Dashboard, EditEvent, Event,
   Header,
   Home,
-  Welcome
+  Welcome,
+  RSVPAdmin
 } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
@@ -73,6 +74,17 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/rsvpadmin/:id"
+            element={
+              <>
+                <Header></Header>
+                <div className="content">
+                  <RSVPAdmin />
+                </div>
+              </>
+            }
+            />
         </Routes>
         <svg
           className="waves"

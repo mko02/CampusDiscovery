@@ -8,8 +8,7 @@ import {
 } from "firebase/auth";
 import {
     get, getDatabase,
-    push, remove,
-    ref, set
+    push, ref, remove, set
 } from "firebase/database";
 import { Title } from "./components/Header/Header.styled";
 const firebaseConfig = {
@@ -149,14 +148,21 @@ export const checkEditPermission = async (eventID) => {
                 })
             }
         });
-
-        
     })
+}
 
+export const addRSVP = async(userID, eventID, status) => {
+    return set(ref(db, `/events/${eventID}/users/${userID}`), {
+        rsvpStatus: status
+    })
+}
 
+export const getRSVP = async(eventID) => {
+    return get(ref(db, `/events/${eventID}`));
+}
 
-
-
+export const getRSVPUser = async(eventID, userID) => {
+    return get(ref(db, `/events/${eventID}/users/${userID}/rsvpStatus`));
 }
 
 export const logout = async() => {

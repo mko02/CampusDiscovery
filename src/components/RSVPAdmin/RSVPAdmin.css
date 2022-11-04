@@ -1,0 +1,13 @@
+.column {
+    float: left;
+    width: 33.33%;
+    border-color: red;
+  }
+  
+  /* Clear floats after the columns */
+  .attendanceGrid {
+    content: "";
+    display: table;
+    clear: both;
+    width: 100%;
+  }
