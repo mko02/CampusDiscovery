@@ -9,9 +9,18 @@ export function CreateEvent() {
   const [location, setLocation] = useState("");
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
+  const [inviteOnly, setInviteOnly] = useState(false);
   const [host, setHost] = useState("");
   const [capacity, setCapacity] = useState(0);
 
+  const Checkbox = ({ label, value, onChange }) => {
+    return (
+      <label>
+        <input type="checkbox" checked={value} onChange={onChange} />
+        {label}
+      </label>
+    );
+  };
   useEffect(() => {
     checkLoggedIn();
     let d = new Date();
@@ -75,6 +84,11 @@ export function CreateEvent() {
         defaultValue={timeEnd}
         onChange={(e) => setTimeEnd(e.target.value)}
       />
+      <label htmlFor="inviteOnly">Invite Only</label>
+      <div>
+      <input type="checkbox" checked={inviteOnly} onChange={(e) => setInviteOnly(!inviteOnly)} />
+      </div>
+
       <label htmlFor="eventCapacity">Guest Capacity (leave blank for no capacity)</label>
       <input
         type="number"
@@ -95,6 +109,7 @@ export function CreateEvent() {
             timeStart,
             timeEnd,
             host,
+            inviteOnly,
             capacity
           ).then((res) => {
             window.location.assign(`/#/event/dashboard`);

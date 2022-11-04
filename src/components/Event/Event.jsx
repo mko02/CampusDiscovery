@@ -9,6 +9,7 @@ import {
 import { RSVP } from "../RSVP-user/RSVP";
 
 import "./Event.css";
+import { RSVPAdmin } from "../exportPages";
 
 export function Event() {
   const [title, setTitle] = useState("");
@@ -21,9 +22,9 @@ export function Event() {
   const [userID, setUserID] = useState("");
   const [userHost, setUserHost] = useState(false);
   const [userType, setUserType] = useState("");
-  const [capacity, setCapacity] = useState(0);
   const [currentAttending, setCurrentAttending] = useState(0);
-
+  const [inviteOnly, setInviteOnly] = useState(false);
+  const [capacity, setCapacity] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -54,7 +55,8 @@ export function Event() {
           endTimeStr.substring(0, endTimeStr.length - 6) + endTimeStrAMorPM;
 
         setEndTime(endTimeStr);
-
+        setCapacity(val.capacity)
+        setInviteOnly(val.inviteOnly)
         setHostID(val.host);
         
 
@@ -164,13 +166,16 @@ export function Event() {
       </div>
 
       <div>
-        <p className="toLeft">Host: {host}</p>
-        <p className="toLeft">Description: {description}</p>
-        <p className="toLeft">Location: {location}</p>
-        <p className="toLeft">Start Time: {timeStart}</p>
-        <p className="toLeft">End Time: {timeEnd}</p>
+        <p class="toLeft">Host: {host}</p>
+        <p class="toLeft">Description: {description}</p>
+        <p class="toLeft">Location: {location}</p>
+        <p class="toLeft"> Start Time: {timeStart}</p>
+        <p class="toLeft">End Time: {timeEnd}</p>
+        <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
         {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
+      { userHost && (<RSVPAdmin eventID={id}/>)}
+
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
     </div>
   );

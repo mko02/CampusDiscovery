@@ -11,6 +11,9 @@ export function EditEvent() {
   const [timeStart, setTimeStart] = useState("");
   const [timeEnd, setTimeEnd] = useState("");
   const [host, setHost] = useState("");
+  const [inviteOnly, setInviteOnly] = useState(false);
+  const [capacity, setCapacity] = useState(0);
+
   useEffect(() => {
     getEvent(id)
       .then((snap) => {
@@ -35,6 +38,9 @@ export function EditEvent() {
               .substring(0, 16)
           );
           setHost(val.host);
+          setInviteOnly(val.inviteOnly);
+          setCapacity(val.capacity);
+          
         } else {
           window.location.replace("/#/dashboard");
         }
@@ -110,6 +116,15 @@ export function EditEvent() {
         value={timeEnd}
         onChange={(e) => setTimeEnd(e.target.value)}
       />
+      <label htmlFor="eventCapacity">Guest Capacity (leave blank for no capacity)</label>
+      <input
+        type="number"
+        id="eventCapacity"
+        placeholder="Guest Capacity"
+        name="eventCapacity"
+        defaultValue={capacity}
+        onChange={(e) => setCapacity(e.target.value)}
+      />
       <br></br>
 
       <button
@@ -123,7 +138,9 @@ export function EditEvent() {
             location,
             timeStart,
             timeEnd,
-            host
+            host,
+            inviteOnly,
+            capacity
           ).then((res) => {
             window.location.assign(`/#/event/${id}`);
           });

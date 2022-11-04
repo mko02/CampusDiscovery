@@ -74,17 +74,6 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/rsvpadmin/:id"
-            element={
-              <>
-                <Header></Header>
-                <div className="content">
-                  <RSVPAdmin />
-                </div>
-              </>
-            }
-            />
         </Routes>
         <svg
           className="waves"
