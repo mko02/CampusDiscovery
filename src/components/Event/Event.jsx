@@ -23,7 +23,7 @@ export function Event() {
   const [userHost, setUserHost] = useState(false);
   const [userType, setUserType] = useState("");
   const [inviteOnly, setInviteOnly] = useState(false);
-
+  const [capacity, setCapacity] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export function Event() {
           endTimeStr.substring(0, endTimeStr.length - 6) + endTimeStrAMorPM;
 
         setEndTime(endTimeStr);
-        
+        setCapacity(val.capacity)
         setInviteOnly(val.inviteOnly)
         setHostID(val.host);
       } else {
@@ -149,8 +149,10 @@ export function Event() {
         <p class="toLeft"> Start Time: {timeStart}</p>
         <p class="toLeft">End Time: {timeEnd}</p>
         <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
+        <p class="toLeft">Event Capacity: {String(capacity)}</p>
       </div>
       { userHost && (<RSVPAdmin eventID={id}/>)}
+
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
     </div>
   );

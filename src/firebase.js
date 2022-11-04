@@ -85,7 +85,7 @@ function randomID() {
     return Math.random().toString(36).substring(2);
 }
 
-export const addEvent = async (title, description, location, timeStart, timeEnd, host, inviteOnly) => {
+export const addEvent = async (title, description, location, timeStart, timeEnd, host, inviteOnly, capacity) => {
     let actualTimeStart = new Date(timeStart).getTime()/1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${randomID()}`), {
@@ -95,11 +95,12 @@ export const addEvent = async (title, description, location, timeStart, timeEnd,
         timeEnd: actualTimeEnd,
         host: host,
         location: location,
-        inviteOnly: inviteOnly
+        inviteOnly: inviteOnly,
+        capacity: parseInt(capacity)
     })
 }
 
-export const editEvent = async (id, title, description, location, timeStart, timeEnd, host) => {
+export const editEvent = async (id, title, description, location, timeStart, timeEnd, host, inviteOnly, capacity) => {
     let actualTimeStart = new Date(timeStart).getTime()/1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${id}`), {
@@ -108,7 +109,9 @@ export const editEvent = async (id, title, description, location, timeStart, tim
         location: location,
         timeStart: actualTimeStart,
         timeEnd: actualTimeEnd,
-        host: host
+        host: host,
+        inviteOnly: inviteOnly,
+        capacity: capacity
     })
 }
 
