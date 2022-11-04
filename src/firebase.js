@@ -149,14 +149,18 @@ export const checkEditPermission = async (eventID) => {
                 })
             }
         });
-
-        
     })
+}
 
+export const addRSVP = async(userID, eventID, rsvpStatus) => {
+    return set(ref(db, `/rsvps/${eventID}`), {
+        userID: userID,
+        rsvpStatus: rsvpStatus
+    })
+}
 
-
-
-
+export const getRSVP = async(eventID) => {
+    return get(ref(db, `/rsvps/${eventID}`));
 }
 
 export const logout = async() => {
