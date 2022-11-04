@@ -4,13 +4,13 @@ import { getRSVP, getUser } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import "./RSVPAdmin.css";
 
-export function RSVPAdmin() {
+export function RSVPAdmin(props) {
     const [inviteStatus, setInviteStatus] = useState(""); //0 is not invite-only, 1 is invite-only
     const [hasLoaded, setLoaded] = useState(false);
     const [ will, setWill ] = useState([]);
     const [ maybe, setMaybe ] = useState([]);
     const [ wont, setWont ] = useState([]);
-    const { id } = useParams();
+    const id = props.eventID;
 
     var willList = []
     var maybeList = []
@@ -54,6 +54,7 @@ export function RSVPAdmin() {
                             } else {
                                 wontList.push(name);
                             }
+                            console.log("work")
                             setWill(willList);
                             setMaybe(maybeList);
                             setWont(wontList);
