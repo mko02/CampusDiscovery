@@ -21,6 +21,8 @@ export function Event() {
   const [userID, setUserID] = useState("");
   const [userHost, setUserHost] = useState(false);
   const [userType, setUserType] = useState("");
+  const [capacity, setCapacity] = useState(0);
+  const [currentAttending, setCurrentAttending] = useState(0);
 
   const { id } = useParams();
 
@@ -54,6 +56,28 @@ export function Event() {
         setEndTime(endTimeStr);
 
         setHostID(val.host);
+        
+
+        var numAttending = 0;
+
+        for (let user in val.users) {
+          if (val.users[user].rsvpStatus === "Will Attend") {
+            numAttending += 1;
+          } else if (val.users[user].rsvpStatus === "Maybe") {
+            numAttending += 1;
+          }
+        }
+
+        setCurrentAttending(numAttending);
+
+        if (val.capacity) {
+          setCapacity(val.capacity);
+
+        } else {
+          setCapacity(0);
+        }
+
+
       } else {
         window.location.replace("/#/dashboard");
       }
@@ -143,8 +167,9 @@ export function Event() {
         <p className="toLeft">Host: {host}</p>
         <p className="toLeft">Description: {description}</p>
         <p className="toLeft">Location: {location}</p>
-        <p className="toLeft"> Start Time: {timeStart}</p>
+        <p className="toLeft">Start Time: {timeStart}</p>
         <p className="toLeft">End Time: {timeEnd}</p>
+        {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
     </div>
