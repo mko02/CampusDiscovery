@@ -54,7 +54,6 @@ export function RSVPAdmin(props) {
                             } else {
                                 wontList.push(name);
                             }
-                            console.log("work")
                             setWill(willList);
                             setMaybe(maybeList);
                             setWont(wontList);
