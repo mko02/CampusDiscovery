@@ -75,7 +75,7 @@ function App() {
             }
           />
           <Route
-            path="/rsvpadmin"
+            path="/rsvpadmin/:id"
             element={
               <>
                 <Header></Header>

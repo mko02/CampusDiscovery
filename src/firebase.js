@@ -152,15 +152,15 @@ export const checkEditPermission = async (eventID) => {
     })
 }
 
-export const addRSVP = async(userID, eventID, rsvpStatus) => {
-    return set(ref(db, `/rsvps/${eventID}`), {
-        userID: userID,
-        rsvpStatus: rsvpStatus
+export const addRSVP = async(userID, eventID) => {
+    console.log("hi");
+    return set(ref(db, `/events/${eventID}/users/${userID}`), {
+        rsvpStatus: "Attending"
     })
 }
 
 export const getRSVP = async(eventID) => {
-    return get(ref(db, `/rsvps/${eventID}`));
+    return get(ref(db, `/events/${eventID}`));
 }
 
 export const logout = async() => {
