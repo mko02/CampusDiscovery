@@ -1,13 +1,12 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { 
-  getEvent, 
-  getUser, 
-  removeEvent, 
-  checkLoggedIn,
-  auth
- } from "../../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  auth, checkLoggedIn, getEvent,
+  getUser,
+  removeEvent
+} from "../../firebase";
+import { RSVP } from "../RSVP-user/RSVP";
 
 import "./Event.css";
 
@@ -141,12 +140,13 @@ export function Event() {
       </div>
 
       <div>
-        <p class="toLeft">Host: {host}</p>
-        <p class="toLeft">Description: {description}</p>
-        <p class="toLeft">Location: {location}</p>
-        <p class="toLeft"> Start Time: {timeStart}</p>
-        <p class="toLeft">End Time: {timeEnd}</p>
+        <p className="toLeft">Host: {host}</p>
+        <p className="toLeft">Description: {description}</p>
+        <p className="toLeft">Location: {location}</p>
+        <p className="toLeft"> Start Time: {timeStart}</p>
+        <p className="toLeft">End Time: {timeEnd}</p>
       </div>
+      {userID && !userHost && <RSVP uid={userID} eventID={id} />}
     </div>
   );
 }

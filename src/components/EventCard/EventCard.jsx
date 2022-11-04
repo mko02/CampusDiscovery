@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import "./EventCard.css";
 
 export function EventCard(props) {
