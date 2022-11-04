@@ -11,6 +11,7 @@ export function CreateEvent() {
   const [timeEnd, setTimeEnd] = useState("");
   const [inviteOnly, setInviteOnly] = useState(false);
   const [host, setHost] = useState("");
+  const [capacity, setCapacity] = useState(0);
 
   const Checkbox = ({ label, value, onChange }) => {
     return (
@@ -87,6 +88,16 @@ export function CreateEvent() {
       <div>
       <input type="checkbox" checked={inviteOnly} onChange={(e) => setInviteOnly(!inviteOnly)} />
       </div>
+
+      <label htmlFor="eventCapacity">Guest Capacity (leave blank for no capacity)</label>
+      <input
+        type="number"
+        id="eventCapacity"
+        placeholder="Guest Capacity"
+        name="eventCapacity"
+        defaultValue=""
+        onChange={(e) => setCapacity(e.target.value)}
+      />
       <div className = "create_event_button">
         <button 
         type="submit"
@@ -99,6 +110,7 @@ export function CreateEvent() {
             timeEnd,
             host,
             inviteOnly
+            capacity
           ).then((res) => {
             window.location.assign(`/#/event/dashboard`);
           });
