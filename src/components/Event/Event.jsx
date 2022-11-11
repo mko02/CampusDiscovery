@@ -2,9 +2,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-    auth, checkLoggedIn, getEvent,
-    getUser,
-    removeEvent
+  auth, checkLoggedIn, getEvent,
+  getUser,
+  removeEvent
 } from "../../firebase";
 import { RSVP } from "../RSVP-user/RSVP";
 
@@ -171,7 +171,6 @@ export function Event() {
         <p className="toLeft">Location: {location}</p>
         <p className="toLeft"> Start Time: {timeStart}</p>
         <p className="toLeft">End Time: {timeEnd}</p>
-        <p className="toLeft">Invite Only: {String(inviteOnly)}</p>
         {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
       { userHost && (<RSVPAdmin eventID={id}/>)}

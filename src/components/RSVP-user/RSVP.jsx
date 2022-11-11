@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { addRSVP, getEvent, getRSVP, getRSVPUser, deleteRSVP } from "../../firebase";
+import { addRSVP, deleteRSVP, getEvent, getRSVP, getRSVPUser } from "../../firebase";
 import "./RSVP.css";
 
 export function RSVP(props) {
@@ -41,6 +41,16 @@ export function RSVP(props) {
             numAttending += 1;
           }
         }
+        if (value.inviteOnly) {
+          if (false) { // if user is on invite list
+
+          } else {
+            setRSVPAvail(0)
+            setErrorMsg("This event is invite-only.")
+          }
+          return
+        }
+
         if (value.capacity) {
           if ((numAttending.toString()) >= value.capacity) {
             if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {

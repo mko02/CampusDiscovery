@@ -101,7 +101,7 @@ export const addEvent = async (title, description, location, timeStart, timeEnd,
     })
 }
 
-export const editEvent = async (id, title, description, location, timeStart, timeEnd, host, inviteOnly, capacity) => {
+export const editEvent = async (id, title, description, location, timeStart, timeEnd, host, inviteOnly, capacity, users) => {
     let actualTimeStart = new Date(timeStart).getTime()/1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${id}`), {
@@ -112,7 +112,8 @@ export const editEvent = async (id, title, description, location, timeStart, tim
         timeEnd: actualTimeEnd,
         host: host,
         inviteOnly: inviteOnly,
-        capacity: capacity
+        capacity: capacity,
+        users: users
     })
 }
 
