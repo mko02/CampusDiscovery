@@ -2,14 +2,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-  auth, checkLoggedIn, getEvent,
-  getUser,
-  removeEvent
+    auth, checkLoggedIn, getEvent,
+    getUser,
+    removeEvent
 } from "../../firebase";
 import { RSVP } from "../RSVP-user/RSVP";
 
-import "./Event.css";
 import { RSVPAdmin } from "../exportPages";
+import "./Event.css";
 
 export function Event() {
   const [title, setTitle] = useState("");
@@ -166,12 +166,12 @@ export function Event() {
       </div>
 
       <div>
-        <p class="toLeft">Host: {host}</p>
-        <p class="toLeft">Description: {description}</p>
-        <p class="toLeft">Location: {location}</p>
-        <p class="toLeft"> Start Time: {timeStart}</p>
-        <p class="toLeft">End Time: {timeEnd}</p>
-        <p class="toLeft">Invite Only: {String(inviteOnly)}</p>
+        <p className="toLeft">Host: {host}</p>
+        <p className="toLeft">Description: {description}</p>
+        <p className="toLeft">Location: {location}</p>
+        <p className="toLeft"> Start Time: {timeStart}</p>
+        <p className="toLeft">End Time: {timeEnd}</p>
+        <p className="toLeft">Invite Only: {String(inviteOnly)}</p>
         {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
       { userHost && (<RSVPAdmin eventID={id}/>)}

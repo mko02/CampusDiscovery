@@ -1,13 +1,24 @@
 .column {
-    float: left;
-    width: 33.33%;
-    border-color: red;
-  }
+  float: left;
+  width: 33.33%;
+  border-color: red;
+}
+
+/* Clear floats after the columns */
+.attendanceGrid {
+  content: "";
+  display: table;
+  clear: both;
+  width: 100%;
   
-  /* Clear floats after the columns */
-  .attendanceGrid {
-    content: "";
-    display: table;
-    clear: both;
-    width: 100%;
-  }
+}
+
+.rsvpNameList {
+  font-size: 20px;
+}
+
+.canStrike:hover {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
