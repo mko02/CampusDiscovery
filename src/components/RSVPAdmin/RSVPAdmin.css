@@ -17,8 +17,7 @@
   font-size: 20px;
 }
 
-.canStrike:hover {
-  text-decoration: line-through;
-  text-decoration-thickness: 2px;
+.canStrike:hover::before {
+  border-bottom: 3px solid white;
 }
 

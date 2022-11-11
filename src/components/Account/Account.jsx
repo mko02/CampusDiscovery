@@ -17,6 +17,7 @@ export function Account() {
   const [status, setStatus] = useState(0); // 0 is login, 1 is register
   const [infoType, setInfoType] = useState("");
   const [infoName, setInfoName] = useState("");
+  const [displayEmail, setDisplayEmail] = useState("")
   const radioHandler = (status) => {
     setStatus(status);
   };
@@ -28,6 +29,7 @@ export function Account() {
         const value = res.val();
         setInfoType(value.accountType);
         setInfoName(value.name);
+        setDisplayEmail(value.email);
       });
     }
   });
@@ -231,6 +233,7 @@ export function Account() {
           <h2>You are logged in</h2>
           <p>Your name: {infoName}</p>
           <p>Role type: {infoType}</p>
+          <p>Email: {displayEmail}</p>
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
