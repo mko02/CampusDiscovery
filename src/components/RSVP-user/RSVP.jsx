@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { addRSVP, getEvent, getRSVP, getRSVPUser } from "../../firebase";
+import { addRSVP, getEvent, getRSVP, getRSVPUser, deleteRSVP } from "../../firebase";
 import "./RSVP.css";
 
 export function RSVP(props) {
@@ -17,8 +17,14 @@ export function RSVP(props) {
   }, []);
 
   function handleRSVPChange(status) {
-    addRSVP(props.uid, props.eventID, status)
+    if (status == "None") {
+      deleteRSVP(props.uid, props.eventID)
+    } else {
+      addRSVP(props.uid, props.eventID, status)
+    }
+
     setRSVPStatus(status);
+    
   }
 
   getEvent(props.eventID)
@@ -58,30 +64,40 @@ export function RSVP(props) {
           <label className="rsvp-label">
             <input
               type="radio"
-              name="attending"
-              checked={RSVPStatus === "Will Attend"}
-              onChange={(e) => handleRSVPChange("Will Attend")}
+              name="cancel"
+              checked={RSVPStatus === "None"}
+              onChange={(e) => handleRSVPChange("None")}
             ></input>
-            Attending
+            X
           </label>
-          <label className="rsvp-label">
-            <input
-              type="radio"
-              name="unsure"
-              checked={RSVPStatus === "Maybe"}
-              onChange={(e) => handleRSVPChange("Maybe")}
-            ></input>
-            Unsure
-          </label>
-          <label className="rsvp-label">
-            <input
-              type="radio"
-              name="notattending"
-              checked={RSVPStatus === "Not Attending"}
-              onChange={(e) => handleRSVPChange("Not Attending")}
-            ></input>
-            Not Attending
-          </label>
+          
+            <label className="rsvp-label">
+              <input
+                type="radio"
+                name="primary"
+                checked={RSVPStatus === "Will Attend"}
+                onChange={(e) => handleRSVPChange("Will Attend")}
+              ></input>
+              Attending
+            </label>
+            <label className="rsvp-label">
+              <input
+                type="radio"
+                name="primary"
+                checked={RSVPStatus === "Maybe"}
+                onChange={(e) => handleRSVPChange("Maybe")}
+              ></input>
+              Unsure
+            </label>
+            <label className="rsvp-label">
+              <input
+                type="radio"
+                name="primary"
+                checked={RSVPStatus === "Not Attending"}
+                onChange={(e) => handleRSVPChange("Not Attending")}
+              ></input>
+              Not Attending
+            </label>
         </div>
       )}
       {RSVPAvail === 0 && <div>

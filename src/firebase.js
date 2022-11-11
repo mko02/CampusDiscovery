@@ -162,6 +162,10 @@ export const addRSVP = async(userID, eventID, status) => {
     })
 }
 
+export const deleteRSVP = async(userID, eventID) => {
+    return remove(ref(db, `/events/${eventID}/users/${userID}`))
+}
+
 export const getRSVP = async(eventID) => {
     return get(ref(db, `/events/${eventID}`));
 }
