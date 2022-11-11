@@ -8,7 +8,7 @@ import {
 } from "../../firebase";
 import { RSVP } from "../RSVP-user/RSVP";
 import { RSVPAdmin } from "../RSVPAdmin/RSVPAdmin";
-import { RSVPInvite } from "../RSVPInvite/RSVPInvite"
+import { RSVPInvite } from "../RSVPInvite/RSVPInvite";
 import "./Event.css";
 
 export function Event() {
@@ -171,7 +171,8 @@ export function Event() {
         <p className="toLeft">Location: {location}</p>
         <p className="toLeft"> Start Time: {timeStart}</p>
         <p className="toLeft">End Time: {timeEnd}</p>
-        {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
+        <p className="toLeft">Current Attending: {currentAttending} </p>
+        {(capacity > 0) && <p className="toLeft">Capacity: {capacity}</p>}
       </div>
 
       { userHost && (<RSVPAdmin eventID={id}/>)}
