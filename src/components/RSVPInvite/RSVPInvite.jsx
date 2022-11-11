@@ -1,18 +1,30 @@
-import { React, useEffect, useState } from "react";
-import { addRSVP, getEvent, getRSVP, addInvitedUser} from "../../firebase";
+import { React, useState } from "react";
+import {addInvitedUser, getAllUsers, getInvitedList} from "../../firebase";
 //import "./RSVPInvite.css";
 
 
 export function RSVPInvite(props) {
 
-    const [email, setEmail] = useState("");
+    const [addEmail, setAddEmail] = useState("");
 
     function handleInviteList() {
-        console.log(email)
-    }
 
+        getAllUsers().then((snap) => {
+            var userList = snap.val()
+
+            for (let user in userList) {
+                if (userList[user]["email"] === addEmail) {
     
+                    addInvitedUser(user, props.eventID)
+                    break;
+                }
+            }
 
+            window.location.reload()
+
+        })
+
+    }
 
     return (
         <>
@@ -22,8 +34,7 @@ export function RSVPInvite(props) {
             <input 
                 type="text" 
                 id="email"
-                defaultValue={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setAddEmail(e.target.value)}
             />
 
             <button onClick={handleInviteList}>

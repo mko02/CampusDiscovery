@@ -184,3 +184,7 @@ export const logout = async() => {
         window.location.reload();
     })
 }
+
+export const getAllUsers = async() => {
+    return get(ref(db, `users`))
+}
