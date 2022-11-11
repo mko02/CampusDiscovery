@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { addRSVP, getRSVP, getRSVPUser } from "../../firebase";
+import { addRSVP, getEvent, getRSVP, getRSVPUser } from "../../firebase";
 import "./RSVP.css";
 
 export function RSVP(props) {
@@ -14,13 +14,41 @@ export function RSVP(props) {
         setRSVPStatus(snap.val());
       }
     })
-    //setErrorMsg("This event is invite-only.")
   }, []);
 
   function handleRSVPChange(status) {
     addRSVP(props.uid, props.eventID, status)
     setRSVPStatus(status);
   }
+
+  getEvent(props.eventID)
+    .then((snap) => {
+      if (snap.exists()) {
+        var numAttending = 0;
+
+        const value = snap.val();
+
+        for (let user in value.users) {
+          if (value.users[user].rsvpStatus === "Will Attend") {
+            numAttending += 1;
+          } else if (value.users[user].rsvpStatus === "Maybe") {
+            numAttending += 1;
+          }
+        }
+        if (value.capacity) {
+          if ((numAttending.toString()) >= value.capacity) {
+            if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {
+              setRSVPAvail(1);
+            } else {
+              setRSVPAvail(0);
+              setErrorMsg("This event is at capacity.")
+            }
+          } else {
+            setRSVPAvail(1);
+          }
+        }
+      }
+    });
 
   return (
     <div className="rsvp-container">
