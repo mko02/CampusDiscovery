@@ -1,17 +1,18 @@
 import { React, useEffect, useState } from "react";
-import { getInvited, getUser } from "../../firebase";
+import {
+    addInvitedUser, deleteInvitedUser, deleteRSVP, getAllUsers,
+    getInvited,
+    getUser
+} from "../../firebase";
 import "./RSVPInvite.css";
 
 export function RSVPInvite(props) {
   const [email, setEmail] = useState("");
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
 
   const id = props.eventID;
-
-  function handleInviteList() {
-    console.log(email);
-  }
 
   useEffect(() => {
     getInvitedUsers();
@@ -19,7 +20,6 @@ export function RSVPInvite(props) {
 
   function allDone(list) {
     setInvitedUsers(list);
-    console.log(list);
   }
   function getInvitedUsers() {
     if (loaded) {
@@ -34,7 +34,7 @@ export function RSVPInvite(props) {
           getUser(user).then((userDetails) => {
             if (userDetails.exists()) {
               let val = userDetails.val();
-              invited.push({ email: val.email, name: val.name });
+              invited.push({ email: val.email, name: val.name, uid: user });
             }
             if (counter == Object.keys(snap.val()).length - 1) {
               allDone(invited);
@@ -48,13 +48,29 @@ export function RSVPInvite(props) {
     });
   }
 
+  function handleInviteList() {
+    getAllUsers().then((snap) => {
+      var userList = snap.val();
+
+      for (let user in userList) {
+        if (userList[user]["email"] === addEmail) {
+          addInvitedUser(user, props.eventID);
+          break;
+        }
+      }
+
+      window.location.reload();
+    });
+  }
+
   const renderInvitedUsers = invitedUsers.map(function (item, index) {
     return (
       <div
         className="canStrike rsvpNameList"
         key={index}
         onClick={() => {
-          //deleteInvitedUser(item.uid, id)
+          deleteInvitedUser(item.uid, id)
+          deleteRSVP(item.uid, id);
           window.location.reload();
         }}
       >
@@ -72,8 +88,7 @@ export function RSVPInvite(props) {
       <input
         type="text"
         id="email"
-        defaultValue={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setAddEmail(e.target.value)}
       />
 
       <button onClick={handleInviteList}>Invite</button>

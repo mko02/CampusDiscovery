@@ -192,6 +192,10 @@ export const getInvited = async (eventID) => {
     return get(ref(db, `/events/${eventID}/invitedList`))
 }
 
+export const deleteInvitedUser = async (userId, eventID) => {
+    return remove(ref(db, `/events/${eventID}/invitedList/${userId}`))
+}
+
 export const deleteRSVP = async (userID, eventID) => {
     return remove(ref(db, `/events/${eventID}/users/${userID}`))
 }
@@ -208,4 +212,8 @@ export const logout = async () => {
     auth.signOut().then(() => {
         window.location.reload();
     })
+}
+
+export const getAllUsers = async() => {
+    return get(ref(db, `users`))
 }
