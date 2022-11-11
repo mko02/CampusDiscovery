@@ -5,6 +5,7 @@
     border-radius: 8px;
     width: 60%;
     margin: auto;
+    position: relative;
 }
 
 .rsvp-label {
@@ -14,6 +15,19 @@
     border-radius: 5px;
     display: inline-block;
     background-color: rgba(83,100,228, 0.2);
+}
+
+.rsvp-label-cancel {
+    right: 0;
+    font-size: 16px;
+    width: 40px; 
+    padding: 10px 0px;
+    border-radius: 5px;
+    display: inline-block;
+    background-color: rgba(83,100,228, 0.2);
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .rsvp-label:has(> input:checked) {
