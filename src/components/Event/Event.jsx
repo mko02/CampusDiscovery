@@ -7,8 +7,8 @@ import {
   removeEvent
 } from "../../firebase";
 import { RSVP } from "../RSVP-user/RSVP";
-
-import { RSVPAdmin } from "../exportPages";
+import { RSVPAdmin } from "../RSVPAdmin/RSVPAdmin";
+import { RSVPInvite } from "../RSVPInvite/RSVPInvite"
 import "./Event.css";
 
 export function Event() {
@@ -173,9 +173,12 @@ export function Event() {
         <p className="toLeft">End Time: {timeEnd}</p>
         {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
       </div>
+
       { userHost && (<RSVPAdmin eventID={id}/>)}
+      { userHost && inviteOnly && (<RSVPInvite eventID={id} />)}
 
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
+
     </div>
   );
 }

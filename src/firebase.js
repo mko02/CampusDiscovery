@@ -163,6 +163,10 @@ export const addRSVP = async(userID, eventID, status) => {
     })
 }
 
+export const addInvitedUser = async(userID, eventID) => {
+    return set(ref(db, `/events/${eventID}/invitedList/${userID}`), true)
+}
+
 export const deleteRSVP = async(userID, eventID) => {
     return remove(ref(db, `/events/${eventID}/users/${userID}`))
 }
