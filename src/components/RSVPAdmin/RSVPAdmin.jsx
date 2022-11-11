@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { Button, React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getRSVP, getUser } from "../../firebase";
+import { deleteRSVP, getRSVP, getUser } from "../../firebase";
 import "./RSVPAdmin.css";
 
 export function RSVPAdmin(props) {
@@ -20,7 +20,8 @@ export function RSVPAdmin(props) {
     const willListRender = will.map(function (item, index) {
         return (
             <div className="canStrike rsvpNameList" key={index} onClick={() => {
-                console.log(item.uid)
+                deleteRSVP(item.uid, id)
+                window.location.reload()
             }}>{item.name}</div>
         );
     });
