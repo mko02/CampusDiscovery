@@ -7,5 +7,3 @@ export { EventCard } from "./EventCard/EventCard";
 export { Header } from "./Header/Header";
 export { Home } from "./Home/Home";
 export { Welcome } from "./WelcomePage/Welcome";
-export { RSVPAdmin } from "./RSVPAdmin/RSVPAdmin";
-

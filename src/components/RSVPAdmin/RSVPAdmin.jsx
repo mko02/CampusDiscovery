@@ -93,17 +93,17 @@ export function RSVPAdmin(props) {
     return (
         <div className = "attendanceGrid rsvp-container">
             <div className = "column">
-                <h1> Attending </h1>
+                <h2> Attending </h2>
                 <hr></hr>
                 {willListRender}
             </div>
             <div className = "column">
-                <h1> Unsure </h1>
+                <h2> Unsure </h2>
                 <hr></hr>
                 {maybeListRender}
             </div>
             <div className = "column">
-                <h1> Not Attending </h1>
+                <h2> Not Attending </h2>
                 <hr></hr>
                 {wontListRender}
             </div> 

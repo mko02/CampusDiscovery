@@ -3,15 +3,23 @@ import {
 } from "firebase/app";
 import {
     createUserWithEmailAndPassword,
-    getAuth, onAuthStateChanged, signInWithEmailAndPassword,
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
     signOut
 } from "firebase/auth";
 import {
-    get, getDatabase,
+    get,
+    getDatabase,
     onValue,
-    push, ref, remove, set
+    push,
+    ref,
+    remove,
+    set
 } from "firebase/database";
-import { Title } from "./components/Header/Header.styled";
+import {
+    Title
+} from "./components/Header/Header.styled";
 const firebaseConfig = {
     apiKey: "AIzaSyCVBNJNQqsGTGIyxRgFwWwD9lnkZAMg5i8",
     authDomain: "gt-campus-discovery.firebaseapp.com",
@@ -87,7 +95,7 @@ function randomID() {
 }
 
 export const addEvent = async (title, description, location, timeStart, timeEnd, host, inviteOnly, capacity) => {
-    let actualTimeStart = new Date(timeStart).getTime()/1000;
+    let actualTimeStart = new Date(timeStart).getTime() / 1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
     return set(ref(db, `/events/${randomID()}`), {
         description: description,
@@ -101,19 +109,33 @@ export const addEvent = async (title, description, location, timeStart, timeEnd,
     })
 }
 
-export const editEvent = async (id, title, description, location, timeStart, timeEnd, host, inviteOnly, capacity) => {
-    let actualTimeStart = new Date(timeStart).getTime()/1000;
+export const editEvent = async (id, title, description, location, timeStart, timeEnd, host, inviteOnly, capacity, users) => {
+    let actualTimeStart = new Date(timeStart).getTime() / 1000;
     let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
-    return set(ref(db, `/events/${id}`), {
-        title: title,
-        description: description, 
-        location: location,
-        timeStart: actualTimeStart,
-        timeEnd: actualTimeEnd,
-        host: host,
-        inviteOnly: inviteOnly,
-        capacity: capacity
-    })
+    if (users) {
+        return set(ref(db, `/events/${id}`), {
+            title: title,
+            description: description,
+            location: location,
+            timeStart: actualTimeStart,
+            timeEnd: actualTimeEnd,
+            host: host,
+            inviteOnly: inviteOnly,
+            capacity: capacity,
+            users: users
+        })
+    } else {
+        return set(ref(db, `/events/${id}`), {
+            title: title,
+            description: description,
+            location: location,
+            timeStart: actualTimeStart,
+            timeEnd: actualTimeEnd,
+            host: host,
+            inviteOnly: inviteOnly,
+            capacity: capacity,
+        })
+    }
 }
 
 export const getUser = async (id) => {
@@ -121,22 +143,22 @@ export const getUser = async (id) => {
 }
 
 
-export const removeEvent = async(id) => {
+export const removeEvent = async (id) => {
     console.log(`/events/${id}`);
     remove(ref(db, `/events/${id}`))
 }
-export const checkLoggedIn = async () => { 
-    auth.onAuthStateChanged(function(user) {
-        if(!user) {
+export const checkLoggedIn = async () => {
+    auth.onAuthStateChanged(function (user) {
+        if (!user) {
             window.location.replace("/#/account");
         } else {
-            
+
         }
     })
 }
 
-export const checkEditPermission = async (eventID) => { 
-    auth.onAuthStateChanged(function(user) {
+export const checkEditPermission = async (eventID) => {
+    auth.onAuthStateChanged(function (user) {
         if (!user) {
             window.location.replace("/#/account");
         }
@@ -156,26 +178,42 @@ export const checkEditPermission = async (eventID) => {
     })
 }
 
-export const addRSVP = async(userID, eventID, status) => {
+export const addRSVP = async (userID, eventID, status) => {
     return set(ref(db, `/events/${eventID}/users/${userID}`), {
         rsvpStatus: status
     })
 }
 
-export const deleteRSVP = async(userID, eventID) => {
+export const addInvitedUser = async (userID, eventID) => {
+    return set(ref(db, `/events/${eventID}/invitedList/${userID}`), true)
+}
+
+export const getInvited = async (eventID) => {
+    return get(ref(db, `/events/${eventID}/invitedList`))
+}
+
+export const deleteInvitedUser = async (userId, eventID) => {
+    return remove(ref(db, `/events/${eventID}/invitedList/${userId}`))
+}
+
+export const deleteRSVP = async (userID, eventID) => {
     return remove(ref(db, `/events/${eventID}/users/${userID}`))
 }
 
-export const getRSVP = async(eventID) => {
+export const getRSVP = async (eventID) => {
     return get(ref(db, `/events/${eventID}`));
 }
 
-export const getRSVPUser = async(eventID, userID) => {
+export const getRSVPUser = async (eventID, userID) => {
     return get(ref(db, `/events/${eventID}/users/${userID}/rsvpStatus`));
 }
 
-export const logout = async() => {
+export const logout = async () => {
     auth.signOut().then(() => {
         window.location.reload();
     })
+}
+
+export const getAllUsers = async() => {
+    return get(ref(db, `users`))
 }

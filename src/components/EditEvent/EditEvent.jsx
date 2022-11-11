@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { editEvent, getEvent, checkEditPermission } from "../../firebase";
+import { checkEditPermission, editEvent, getEvent } from "../../firebase";
 import "./EditEvent.css";
 
 export function EditEvent() {
@@ -12,7 +12,9 @@ export function EditEvent() {
   const [timeEnd, setTimeEnd] = useState("");
   const [host, setHost] = useState("");
   const [inviteOnly, setInviteOnly] = useState(false);
-  const [capacity, setCapacity] = useState(0);
+  const [capacity, setCapacity] = useState("");
+
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     getEvent(id)
@@ -38,9 +40,18 @@ export function EditEvent() {
               .substring(0, 16)
           );
           setHost(val.host);
-          setInviteOnly(val.inviteOnly);
-          setCapacity(val.capacity);
+          if (!val.inviteOnly) {
+            setInviteOnly(false);
+          } else {
+            setInviteOnly(val.inviteOnly);
+          }
+          if(val.capacity){
+            setCapacity(val.capacity);
+          } else {
+            setCapacity("");
+          }
           
+          setUsers(val.users);
         } else {
           window.location.replace("/#/dashboard");
         }
@@ -53,7 +64,7 @@ export function EditEvent() {
   return (
     <div>
       <div>
-      <div className="backButton">
+        <div className="backButton">
           <Link to={`/event/${id}`}>
             <svg width="30px" height="30px">
               <g id="c185_triangle">
@@ -116,7 +127,17 @@ export function EditEvent() {
         value={timeEnd}
         onChange={(e) => setTimeEnd(e.target.value)}
       />
-      <label htmlFor="eventCapacity">Guest Capacity (leave blank for no capacity)</label>
+      <label htmlFor="inviteOnly">Invite Only</label>
+      <div>
+        <input
+          type="checkbox"
+          checked={inviteOnly}
+          onChange={(e) => setInviteOnly(!inviteOnly)}
+        />
+      </div>
+      <label htmlFor="eventCapacity">
+        Guest Capacity (leave blank or 0 for no capacity)
+      </label>
       <input
         type="number"
         id="eventCapacity"
@@ -140,7 +161,8 @@ export function EditEvent() {
             timeEnd,
             host,
             inviteOnly,
-            capacity
+            capacity,
+            users
           ).then((res) => {
             window.location.assign(`/#/event/${id}`);
           });

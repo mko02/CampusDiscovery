@@ -1,0 +1,22 @@
+.invitedusers {
+    margin-top: 20px;
+    width: 60%;
+}
+
+.invitedUser{
+    font-size: 20px;
+}
+
+.inviteName{
+    text-align: left;
+    width: 45%;
+    margin-left: 5%;
+    display: inline-block;
+}
+
+.inviteEmail {
+    text-align: right;
+    width: 45%;
+    display: inline-block;
+    margin-right: 5%;
+}

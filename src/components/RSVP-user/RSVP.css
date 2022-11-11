@@ -33,3 +33,7 @@
 .rsvp-label:has(> input:checked) {
     background-color:rgba(83,100,228, 0.6);
 }
+
+.rsvpnote {
+    font-size: 16px;
+}

@@ -1,11 +1,18 @@
 import { React, useEffect, useState } from "react";
-import { addRSVP, getEvent, getRSVP, getRSVPUser, deleteRSVP } from "../../firebase";
+import {
+  addRSVP,
+  deleteRSVP,
+  getEvent,
+  getRSVP,
+  getRSVPUser
+} from "../../firebase";
 import "./RSVP.css";
 
 export function RSVP(props) {
   const [RSVPAvail, setRSVPAvail] = useState(1); // 1 availeble, 0 not
   const [RSVPErrorMsg, setErrorMsg] = useState("");
   const [RSVPStatus, setRSVPStatus] = useState("");
+  const [RSVPNote, setRSVPNote] = useState("")
 
   useEffect(() => {
     getRSVPUser(props.eventID, props.uid).then((snap) => {
@@ -13,23 +20,9 @@ export function RSVP(props) {
       } else {
         setRSVPStatus(snap.val());
       }
-    })
-  }, []);
+    });
 
-  function handleRSVPChange(status) {
-    if (status == "None") {
-      deleteRSVP(props.uid, props.eventID)
-      setRSVPStatus("");
-
-    } else {
-      addRSVP(props.uid, props.eventID, status)
-      setRSVPStatus(status);
-
-    }    
-  }
-
-  getEvent(props.eventID)
-    .then((snap) => {
+    getEvent(props.eventID).then((snap) => {
       if (snap.exists()) {
         var numAttending = 0;
 
@@ -42,13 +35,30 @@ export function RSVP(props) {
             numAttending += 1;
           }
         }
+        if (value.inviteOnly) {
+          if (value.invitedList) {
+            if (props.uid in value.invitedList) {
+              setRSVPNote("You're invited!")
+              return;
+            } else {
+              setRSVPAvail(0);
+              setErrorMsg("This event is invite-only.");
+              return;
+            }
+          } else {
+            setRSVPAvail(0);
+            setErrorMsg("This event is invite-only.");
+            return;
+          }
+        }
+
         if (value.capacity) {
-          if ((numAttending.toString()) >= value.capacity) {
+          if (numAttending.toString() >= value.capacity) {
             if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {
               setRSVPAvail(1);
             } else {
               setRSVPAvail(0);
-              setErrorMsg("This event is at capacity.")
+              setErrorMsg("This event is at capacity.");
             }
           } else {
             setRSVPAvail(1);
@@ -56,25 +66,37 @@ export function RSVP(props) {
         }
       }
     });
+  }, []);
+
+  function handleRSVPChange(status) {
+    if (status == "None") {
+      deleteRSVP(props.uid, props.eventID);
+      setRSVPStatus("");
+    } else {
+      addRSVP(props.uid, props.eventID, status);
+      setRSVPStatus(status);
+    }
+  }
 
   return (
     <div className="rsvp-container">
       <h2>RSVP</h2>
       {RSVPAvail === 1 && (
         <>
-         {RSVPStatus != "" && 
-          <div>
-            <label className="rsvp-label-cancel">
-              <input
-                type="radio"
-                name="cancel"
-                checked={RSVPStatus === "None"}
-                onChange={(e) => handleRSVPChange("None")}
-              ></input>
-              X
-            </label>
-          </div>
-          }
+          {RSVPNote != "" && <i className="rsvpnote">{RSVPNote}</i>}
+          {RSVPStatus != "" && (
+            <div>
+              <label className="rsvp-label-cancel">
+                <input
+                  type="radio"
+                  name="cancel"
+                  checked={RSVPStatus === "None"}
+                  onChange={(e) => handleRSVPChange("None")}
+                ></input>
+                X
+              </label>
+            </div>
+          )}
           <div className="rsvp-buttons-container">
             <label className="rsvp-label primary">
               <input
@@ -106,11 +128,11 @@ export function RSVP(props) {
           </div>
         </>
       )}
-      {RSVPAvail === 0 && 
+      {RSVPAvail === 0 && (
         <div>
           <p>{RSVPErrorMsg}</p>
         </div>
-      }
+      )}
     </div>
   );
 }

@@ -2,13 +2,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-    auth, checkLoggedIn, getEvent,
-    getUser,
-    removeEvent
+  auth, checkLoggedIn, getEvent,
+  getUser,
+  removeEvent
 } from "../../firebase";
 import { RSVP } from "../RSVP-user/RSVP";
-
-import { RSVPAdmin } from "../exportPages";
+import { RSVPAdmin } from "../RSVPAdmin/RSVPAdmin";
+import { RSVPInvite } from "../RSVPInvite/RSVPInvite";
 import "./Event.css";
 
 export function Event() {
@@ -171,12 +171,15 @@ export function Event() {
         <p className="toLeft">Location: {location}</p>
         <p className="toLeft"> Start Time: {timeStart}</p>
         <p className="toLeft">End Time: {timeEnd}</p>
-        <p className="toLeft">Invite Only: {String(inviteOnly)}</p>
-        {(capacity > 0) && <p className="toLeft">Capacity: {currentAttending} / {capacity}</p>}
+        <p className="toLeft">Current Attending: {currentAttending} </p>
+        {(capacity > 0) && <p className="toLeft">Capacity: {capacity}</p>}
       </div>
+
       { userHost && (<RSVPAdmin eventID={id}/>)}
+      { userHost && inviteOnly && (<RSVPInvite eventID={id} />)}
 
       {userID && !userHost && <RSVP uid={userID} eventID={id} />}
+
     </div>
   );
 }

@@ -89,7 +89,7 @@ export function CreateEvent() {
       <input type="checkbox" checked={inviteOnly} onChange={(e) => setInviteOnly(!inviteOnly)} />
       </div>
 
-      <label htmlFor="eventCapacity">Guest Capacity (leave blank for no capacity)</label>
+      <label htmlFor="eventCapacity">Guest Capacity (leave blank or 0 for no capacity)</label>
       <input
         type="number"
         id="eventCapacity"
