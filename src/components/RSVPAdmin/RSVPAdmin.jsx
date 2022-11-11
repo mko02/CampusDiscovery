@@ -1,7 +1,7 @@
-import { React, useState, useEffect, Button } from "react";
-import { useParams} from "react-router-dom";
-import { getRSVP, getUser } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { Button, React, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getRSVP, getUser } from "../../firebase";
 import "./RSVPAdmin.css";
 
 export function RSVPAdmin() {
@@ -18,7 +18,7 @@ export function RSVPAdmin() {
 
     const willListRender = will.map(function (item, index) {
         return (
-            <div key={index}>{item}</div>
+            <div className="canStrike" key={index}>{item}</div>
         );
     });
 
@@ -43,7 +43,6 @@ export function RSVPAdmin() {
                 const value = snap.val();
                 for (let user in value.users) {
                     let status = value.users[user].rsvpStatus
-
                     getUser(user).then((userDetails) => {
                         if (userDetails.exists()) {
                             const name = userDetails.val().name;
@@ -58,7 +57,7 @@ export function RSVPAdmin() {
                             setMaybe(maybeList);
                             setWont(wontList);
                             setLoaded(true);
-                        }
+                        } 
                     });
                 }
             });
