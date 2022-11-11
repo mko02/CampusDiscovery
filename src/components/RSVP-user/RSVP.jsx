@@ -19,12 +19,13 @@ export function RSVP(props) {
   function handleRSVPChange(status) {
     if (status == "None") {
       deleteRSVP(props.uid, props.eventID)
+      setRSVPStatus("");
+
     } else {
       addRSVP(props.uid, props.eventID, status)
-    }
+      setRSVPStatus(status);
 
-    setRSVPStatus(status);
-    
+    }    
   }
 
   getEvent(props.eventID)
@@ -60,18 +61,22 @@ export function RSVP(props) {
     <div className="rsvp-container">
       <h2>RSVP</h2>
       {RSVPAvail === 1 && (
-        <div className="rsvp-buttons-container">
-          <label className="rsvp-label">
-            <input
-              type="radio"
-              name="cancel"
-              checked={RSVPStatus === "None"}
-              onChange={(e) => handleRSVPChange("None")}
-            ></input>
-            X
-          </label>
-          
-            <label className="rsvp-label">
+        <>
+         {RSVPStatus != "" && 
+          <div>
+            <label className="rsvp-label-cancel">
+              <input
+                type="radio"
+                name="cancel"
+                checked={RSVPStatus === "None"}
+                onChange={(e) => handleRSVPChange("None")}
+              ></input>
+              X
+            </label>
+          </div>
+          }
+          <div className="rsvp-buttons-container">
+            <label className="rsvp-label primary">
               <input
                 type="radio"
                 name="primary"
@@ -80,7 +85,7 @@ export function RSVP(props) {
               ></input>
               Attending
             </label>
-            <label className="rsvp-label">
+            <label className="rsvp-label primary">
               <input
                 type="radio"
                 name="primary"
@@ -89,7 +94,7 @@ export function RSVP(props) {
               ></input>
               Unsure
             </label>
-            <label className="rsvp-label">
+            <label className="rsvp-label primary">
               <input
                 type="radio"
                 name="primary"
@@ -98,10 +103,14 @@ export function RSVP(props) {
               ></input>
               Not Attending
             </label>
-        </div>
+          </div>
+        </>
       )}
-      {RSVPAvail === 0 && <div>
-        <p>{RSVPErrorMsg}</p></div>}
+      {RSVPAvail === 0 && 
+        <div>
+          <p>{RSVPErrorMsg}</p>
+        </div>
+      }
     </div>
   );
 }
