@@ -3,11 +3,14 @@ import React, { Component } from "react";
 import {
   Account,
   CreateEvent,
-  Dashboard, EditEvent, Event,
+  Dashboard,
+  EditEvent,
+  Event,
+  EventMap,
   Header,
   Home,
-  Welcome,
-  RSVPAdmin
+  RSVPAdmin,
+  Welcome
 } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
@@ -70,6 +73,17 @@ function App() {
                 <Header></Header>
                 <div className="content">
                   <EditEvent />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/map"
+            element={
+              <>
+                <Header></Header>
+                <div className="content">
+                  <EventMap></EventMap>
                 </div>
               </>
             }

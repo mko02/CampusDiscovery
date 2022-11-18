@@ -15,56 +15,55 @@ export function RSVP(props) {
   const [RSVPNote, setRSVPNote] = useState("")
 
   useEffect(() => {
-    getRSVPUser(props.eventID, props.uid).then((snap) => {
-      if (snap.val() == null) {
+    getRSVPUser(props.eventID, props.uid).then((snap2) => {
+      if (snap2.val() == null) {
       } else {
-        setRSVPStatus(snap.val());
+        setRSVPStatus(snap2.val());
       }
-    });
-
-    getEvent(props.eventID).then((snap) => {
-      if (snap.exists()) {
-        var numAttending = 0;
-
-        const value = snap.val();
-
-        for (let user in value.users) {
-          if (value.users[user].rsvpStatus === "Will Attend") {
-            numAttending += 1;
-          } else if (value.users[user].rsvpStatus === "Maybe") {
-            numAttending += 1;
+      getEvent(props.eventID).then((snap) => {
+        if (snap.exists()) {
+          var numAttending = 0;
+  
+          const value = snap.val();
+  
+          for (let user in value.users) {
+            if (value.users[user].rsvpStatus === "Will Attend") {
+              numAttending += 1;
+            } else if (value.users[user].rsvpStatus === "Maybe") {
+              numAttending += 1;
+            }
           }
-        }
-        if (value.inviteOnly) {
-          if (value.invitedList) {
-            if (props.uid in value.invitedList) {
-              setRSVPNote("You're invited!")
-              return;
+          if (value.inviteOnly) {
+            if (value.invitedList) {
+              if (props.uid in value.invitedList) {
+                setRSVPNote("You're invited!")
+                return;
+              } else {
+                setRSVPAvail(0);
+                setErrorMsg("This event is invite-only.");
+                return;
+              }
             } else {
               setRSVPAvail(0);
               setErrorMsg("This event is invite-only.");
               return;
             }
-          } else {
-            setRSVPAvail(0);
-            setErrorMsg("This event is invite-only.");
-            return;
           }
-        }
-
-        if (value.capacity) {
-          if (numAttending.toString() >= value.capacity) {
-            if (RSVPStatus === "Will Attend" || RSVPStatus === "Maybe") {
-              setRSVPAvail(1);
+  
+          if (value.capacity) {
+            if (numAttending.toString() >= value.capacity) {
+              if (snap2.val() === "Will Attend" || snap2.val() === "Maybe") {
+                setRSVPAvail(1);
+              } else {
+                setRSVPAvail(0);
+                setErrorMsg("This event is at capacity.");
+              }
             } else {
-              setRSVPAvail(0);
-              setErrorMsg("This event is at capacity.");
+              setRSVPAvail(1);
             }
-          } else {
-            setRSVPAvail(1);
           }
         }
-      }
+      });
     });
   }, []);
 
