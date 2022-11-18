@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";
 import { EventCard } from "../EventCard/EventCard";
 import { FiFilter } from 'react-icons/fi';
