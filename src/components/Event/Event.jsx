@@ -27,7 +27,7 @@ export function Event() {
   const [capacity, setCapacity] = useState(0);
   const { id, sortBy } = useParams();
 
-  const link = "/dashboard?sort=" + sortBy;
+  const link = "/dashboard"
 
   useEffect(() => {
     checkLoggedIn();
