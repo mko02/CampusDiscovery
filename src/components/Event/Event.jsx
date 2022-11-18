@@ -25,7 +25,9 @@ export function Event() {
   const [currentAttending, setCurrentAttending] = useState(0);
   const [inviteOnly, setInviteOnly] = useState(false);
   const [capacity, setCapacity] = useState(0);
-  const { id } = useParams();
+  const { id, sortBy } = useParams();
+
+  const link = "/dashboard?sort=" + sortBy;
 
   useEffect(() => {
     checkLoggedIn();
@@ -116,7 +118,7 @@ export function Event() {
     <div>
       <div className="header">
         <div className="backButton">
-          <Link to="/dashboard">
+          <Link to={link}>
             <svg width="30px" height="30px">
               <g id="c185_triangle">
                 <path
