@@ -7,7 +7,6 @@ import "./Dashboard.css";
 
 export function Dashboard() {
   const [events, setEvents] = useState([]);
-  const [content, setContent] = useState([]);
   const [hasLoaded, setLoaded] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
 

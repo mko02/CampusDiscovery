@@ -2,7 +2,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { Component, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { addEvent, auth, checkLoggedIn, getUser } from "../../firebase";
+import { LocationSearch } from "../LocationSearch/search";
 import "./CreateEvent.css";
+
 export function CreateEvent() {
   const [title, setTitle] = useState("");
   const [description, setDescr] = useState("");
@@ -59,13 +61,15 @@ export function CreateEvent() {
         onChange={(e) => setDescr(e.target.value)}
       ></textarea>
       <label htmlFor="eventLocation">Location:</label>
-      <input
+      <LocationSearch setSelectedLocation={setLocation} />
+      
+      {/* <input
         type="text"
         id="eventLocation"
         placeholder="Enter Event Location"
         name="eventLocation"
         onChange={(e) => setLocation(e.target.value)}
-      />
+      /> */}
       <label htmlFor="eventStartTime">Event Start</label>
       <input
         type="datetime-local"
