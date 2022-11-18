@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { Link } from "react-router-dom";
-import { checkLoggedIn, getAnyEvent } from "../../firebase";
+import { Link, useSearchParams } from "react-router-dom";
+import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";
 import { EventCard } from "../EventCard/EventCard";
+import { FiFilter } from 'react-icons/fi';
 import "./Dashboard.css";
 
 export function Dashboard() {
   const [events, setEvents] = useState([]);
   const [hasLoaded, setLoaded] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+  
+  const handleSort = (sortBy) => {
+    localStorage.setItem('sort', sortBy);
+    window.location.reload();
+  }
+
+  let sortBy = localStorage.getItem('sort');
 
   const eventsPerPage = 10;
   const pagesVisited = pageNumber * eventsPerPage;
@@ -17,7 +31,7 @@ export function Dashboard() {
     .map(function (obj, i) {
       return (
         <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
-          <EventCard event={obj.data} />
+          <EventCard event={obj.data}/>
         </a>
       );
     });
@@ -36,7 +50,22 @@ export function Dashboard() {
         for (let event in value) {
           eventList.push({ key: event, data: value[event] });
         }
-        eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
+
+        if (sortBy === "date") {
+          eventList.sort((a,b) => 
+            b.data.timeStart - a.data.timeStart)
+        } else if (sortBy === "eventName") {
+          eventList.sort((a,b) => 
+            a.data.title.localeCompare(b.data.title))
+        } else if (sortBy === "host") {
+          eventList.sort((a,b) => 
+            a.data.host.localeCompare(b.data.host))
+        } else {
+          eventList.sort((a,b) => 
+            b.data.timeStart - a.data.timeStart)
+        }
+
+        //console.log(eventList);
         setEvents(eventList);
         setLoaded(true);
       });
@@ -55,7 +84,7 @@ export function Dashboard() {
 
   
   return (
-    <div>
+    <div style={{paddingTop: "30px", position: "relative"}}>
       <div className="profileIcon">
         <Link to="/account">
           <svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" version="1.1" viewBox="0 0 752 752">
@@ -65,7 +94,21 @@ export function Dashboard() {
           </svg>
         </Link>
       </div>
-      <h1>Dashboard:</h1>
+      <div className="DashBoard_filterIcon_container">
+        <FiFilter 
+            className="DashBoard_filterIcon"
+            onClick={handleOpen}/>
+      </div>
+      <div className="dashboard_dropdown">
+        { open &&
+          <div>
+            <button className="dashboard_dropdown_button" onClick={() => handleSort("date")}>Date</button>
+            <button className="dashboard_dropdown_button" onClick={() => handleSort("eventName")}>Event Name</button>
+            <button className="dashboard_dropdown_button" onClick={() => handleSort({ sort: "host"})}>Host</button>
+          </div>
+        }
+      </div>
+      <h1 style={{userSelect: "none"}}>Dashboard:</h1>
       <div style={{marginBottom: "10px"}}>
         <a href="/#/createEvent" className='button_style'>
           Create Event
