@@ -5,9 +5,13 @@ import {
   getUser,
   logInWithEmailAndPassword,
   logout,
-  registerWithEmailAndPassword
+  registerWithEmailAndPassword,
+  checkLoggedIn,
+  getRSVPEvents,
+  getEvent
 } from "../../firebase";
 import "./Account.css";
+import { EventCard } from "../EventCard/EventCard";
 
 export function Account() {
   const [email, setEmail] = useState("");
@@ -18,6 +22,7 @@ export function Account() {
   const [infoType, setInfoType] = useState("");
   const [infoName, setInfoName] = useState("");
   const [displayEmail, setDisplayEmail] = useState("")
+  const [userID, setUserID] = useState("")
   const radioHandler = (status) => {
     setStatus(status);
   };
@@ -27,12 +32,50 @@ export function Account() {
       setStatus(3);
       getUser(user.uid).then((res) => {
         const value = res.val();
+        setUserID(user.uid);
         setInfoType(value.accountType);
         setInfoName(value.name);
         setDisplayEmail(value.email);
       });
     }
   });
+
+  const [events, setEvents] = useState([]);
+  const [hasLoaded, setLoaded] = useState(false);
+  const displayEvents = events
+    .map(function (obj, i) {
+      return (
+        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+          <EventCard event={obj.data} />
+        </a>
+      );
+    });
+
+  var eventList = [];
+
+  useEffect(() => {
+    checkLoggedIn();
+    getEvents(userID);
+  }, [userID]);
+
+  function getEvents(userID) {
+    if (!hasLoaded && userID != "") {
+      getRSVPEvents(userID).then((snap) => {
+        eventList = [];
+        const value = snap.val();
+        for (let event in value) {
+          getEvent(event).then((eventDetails) => {
+            if (eventDetails.exists()) {
+              eventList.push({ key: event, data: eventDetails.val() });
+            }
+            eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
+            setEvents(eventList);
+            setLoaded(true);
+          })
+        }
+      });
+    }
+  }
 
   return (
     <div id="pageContainer">
@@ -226,17 +269,24 @@ export function Account() {
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
+          
         </>
       )}
       {status === 3 && (
         <>
-          <h2>You are logged in</h2>
-          <p>Your name: {infoName}</p>
-          <p>Role type: {infoType}</p>
-          <p>Email: {displayEmail}</p>
+        <div className="accountHeader">
+          <h2>Your Events:</h2>
+            <div className="infoCard">
+              <p>{infoName}</p>
+              <p>{infoType}</p>
+              <p>{displayEmail}</p>
+            </div>
+        </div>
+          
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
+          <div className="gridContainer">{displayEvents}</div>
           <br></br>
           <button className="btn" onClick={logout}>
             Logout

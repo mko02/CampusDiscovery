@@ -78,6 +78,10 @@ export const getAnyEvent = async () => {
     return get(ref(db, "events/"));
 }
 
+export const getRSVPEvents = async (userID) => {
+    return get(ref(db, `/users/${userID}/events/`))
+}
+
 export const createRandomEvent = async () => {
     let id = randomID();
     return set(ref(db, `/events/${randomID()}`), {
@@ -144,7 +148,12 @@ export const getUser = async (id) => {
 
 
 export const removeEvent = async (id) => {
-    console.log(`/events/${id}`);
+    getRSVP(id).then((snap) => {
+        const value = snap.val();
+            for (let user in value.users) {
+                remove(ref(db, `/users/${user}/events/${id}`))
+            }
+    })
     remove(ref(db, `/events/${id}`))
 }
 export const checkLoggedIn = async () => {
@@ -179,6 +188,9 @@ export const checkEditPermission = async (eventID) => {
 }
 
 export const addRSVP = async (userID, eventID, status) => {
+    set(ref(db, `/users/${userID}/events/${eventID}`), {
+        rsvpStatus: status
+    })
     return set(ref(db, `/events/${eventID}/users/${userID}`), {
         rsvpStatus: status
     })
@@ -193,10 +205,12 @@ export const getInvited = async (eventID) => {
 }
 
 export const deleteInvitedUser = async (userId, eventID) => {
+    remove(ref(db, `/users/${userId}/events/${eventID}`))
     return remove(ref(db, `/events/${eventID}/invitedList/${userId}`))
 }
 
 export const deleteRSVP = async (userID, eventID) => {
+    remove(ref(db, `/users/${userID}/events/${eventID}`))
     return remove(ref(db, `/events/${eventID}/users/${userID}`))
 }
 

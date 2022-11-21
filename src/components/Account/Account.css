@@ -145,3 +145,29 @@ i {
 .btn {
    text-decoration: none;
 }
+
+.accountHeader {
+   display: flex;
+   width: 100%;
+}
+
+.infoCard {
+   background-color: #282c34;
+   border-radius: 5px;
+   padding: 5px;
+   margin-left: auto;
+   margin-right: 0;
+}
+
+.gridContainer {
+   display: grid;
+   grid-template-columns: 300px 300px;
+   width: 600px;
+   margin: auto;
+}
+
+.gridCard {
+   margin: 10px auto;
+   text-decoration: none;
+}
+
