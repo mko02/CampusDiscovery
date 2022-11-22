@@ -64,7 +64,8 @@ export function Account() {
         eventList = [];
         const value = snap.val();
         for (let event in value) {
-          if (value[event].rsvpStatus == "Not Attending") {
+          // Note any "Not-Attending statuses will not show up in AccountEvents"
+          if (value[event].rsvpStatus == "Not Attending") { 
             continue;
           }
           console.log(value[event].rsvpStatus)
