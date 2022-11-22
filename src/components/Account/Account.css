@@ -144,11 +144,13 @@ i {
 
 .btn {
    text-decoration: none;
+   margin: 10px;
 }
 
 .accountHeader {
    display: flex;
    width: 100%;
+   margin-bottom: 20px;
 }
 
 .infoCard {
@@ -157,6 +159,13 @@ i {
    padding: 5px;
    margin-left: auto;
    margin-right: 0;
+}
+
+.infoText {
+   text-align: right;
+   line-height: 5px;
+   font-size: 15px;
+   margin: 15px;
 }
 
 .gridContainer {

@@ -64,6 +64,10 @@ export function Account() {
         eventList = [];
         const value = snap.val();
         for (let event in value) {
+          if (value[event].rsvpStatus == "Not Attending") {
+            continue;
+          }
+          console.log(value[event].rsvpStatus)
           getEvent(event).then((eventDetails) => {
             if (eventDetails.exists()) {
               eventList.push({ key: event, data: eventDetails.val() });
@@ -277,20 +281,23 @@ export function Account() {
         <div className="accountHeader">
           <h2>Your Events:</h2>
             <div className="infoCard">
-              <p>{infoName}</p>
-              <p>{infoType}</p>
-              <p>{displayEmail}</p>
+              <p className="infoText">{infoName}</p>
+              <p className="infoText">{infoType}</p>
+              <p className="infoText">{displayEmail}</p>
             </div>
         </div>
+          <div>
+            <a href="#/dashboard" className="btn">
+              Continue to Dashboard
+            </a>
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
+          </div>
           
-          <a href="#/dashboard" className="btn">
-            Continue to Dashboard
-          </a>
           <div className="gridContainer">{displayEvents}</div>
           <br></br>
-          <button className="btn" onClick={logout}>
-            Logout
-          </button>
+          
         </>
       )}
     </div>
