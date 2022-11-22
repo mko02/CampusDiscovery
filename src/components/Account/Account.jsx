@@ -41,17 +41,27 @@ export function Account() {
   });
 
   const [events, setEvents] = useState([]);
+  const [times, setTimes] = useState([]);
   const [hasLoaded, setLoaded] = useState(false);
   const displayEvents = events
     .map(function (obj, i) {
-      return (
-        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
-          <EventCard event={obj.data} />
-        </a>
-      );
+      if (checkConflicts(events, obj)) {
+        return (
+          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+            <EventCard event={obj.data} color={"red"}/>
+          </a>
+        );
+      } else {
+        return (
+          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+            <EventCard event={obj.data}/>
+          </a>
+        );
+      }
     });
 
   var eventList = [];
+  var timeList = [];
 
   useEffect(() => {
     checkLoggedIn();
@@ -62,7 +72,9 @@ export function Account() {
     if (!hasLoaded && userID != "") {
       getRSVPEvents(userID).then((snap) => {
         eventList = [];
+        timeList = [];
         const value = snap.val();
+        let counter = 0;
         for (let event in value) {
           // Note any "Not-Attending statuses will not show up in AccountEvents"
           if (value[event].rsvpStatus == "Not Attending") { 
@@ -71,15 +83,46 @@ export function Account() {
           console.log(value[event].rsvpStatus)
           getEvent(event).then((eventDetails) => {
             if (eventDetails.exists()) {
+              timeList.push({ key: event, data: { timeStart: eventDetails.val().timeStart, timeEnd: eventDetails.val().timeEnd } });
               eventList.push({ key: event, data: eventDetails.val() });
             }
             eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
-            setEvents(eventList);
-            setLoaded(true);
+            if (counter == Object.keys(value).length - 1) {
+              return finalizeEvents(eventList)
+            }
+            counter++;
           })
         }
       });
     }
+  }
+
+  function finalizeEvents(eventList) {
+    setEvents(eventList);
+    setTimes(timeList);
+    setLoaded(true);
+  }
+
+  function checkConflicts(events, event) {
+    //console.log(events)
+    //console.log(event)
+    
+    let index = 0;
+    
+    while (index < times.length) {
+      if (event.key != events[index].key) {
+        const eventStart = event.data.timeStart;
+        const eventEnd = event.data.timeEnd;
+        const startTime = events[index].data.timeStart;
+        const endTime = events[index].data.timeEnd;
+        if ((eventStart >= startTime && eventStart <= endTime) || (eventEnd >= startTime && eventEnd <= endTime)
+          || (startTime >= eventStart && startTime <= eventEnd) || (endTime >= eventStart && endTime <= eventEnd)) {
+          return true;
+        }
+      }
+      index++;
+    }
+    return false;
   }
 
   return (
@@ -295,10 +338,8 @@ export function Account() {
               Logout
             </button>
           </div>
-          
           <div className="gridContainer">{displayEvents}</div>
           <br></br>
-          
         </>
       )}
     </div>

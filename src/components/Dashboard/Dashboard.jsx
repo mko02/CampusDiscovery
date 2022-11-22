@@ -26,6 +26,7 @@ export function Dashboard() {
 
   useEffect(() => {
     checkLoggedIn();
+    getEvents();
   }, []);
 
   function getEvents() {
@@ -42,10 +43,6 @@ export function Dashboard() {
       });
     }
   }
-
-  useEffect(() => {
-    getEvents();
-  }, []);
 
   const pageCount = Math.ceil(events.length / eventsPerPage);
 
