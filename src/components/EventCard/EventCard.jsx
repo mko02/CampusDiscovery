@@ -6,7 +6,6 @@ export function EventCard(props) {
   let startTimeStrAMorPM = startTimeStr.substring(startTimeStr.length - 3);
   startTimeStr =
     startTimeStr.substring(0, startTimeStr.length - 6) + startTimeStrAMorPM; 
-    console.log(props.color)
   const style = {
     border: '2px solid ' + props.color
   }

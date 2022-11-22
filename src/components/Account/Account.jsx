@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { Component, React, useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
   auth,
   getUser,
@@ -41,7 +41,6 @@ export function Account() {
   });
 
   const [events, setEvents] = useState([]);
-  const [times, setTimes] = useState([]);
   const [hasLoaded, setLoaded] = useState(false);
   const displayEvents = events
     .map(function (obj, i) {
@@ -61,7 +60,6 @@ export function Account() {
     });
 
   var eventList = [];
-  var timeList = [];
 
   useEffect(() => {
     checkLoggedIn();
@@ -72,7 +70,6 @@ export function Account() {
     if (!hasLoaded && userID != "") {
       getRSVPEvents(userID).then((snap) => {
         eventList = [];
-        timeList = [];
         const value = snap.val();
         let counter = 0;
         for (let event in value) {
@@ -80,10 +77,8 @@ export function Account() {
           if (value[event].rsvpStatus == "Not Attending") { 
             continue;
           }
-          console.log(value[event].rsvpStatus)
           getEvent(event).then((eventDetails) => {
             if (eventDetails.exists()) {
-              timeList.push({ key: event, data: { timeStart: eventDetails.val().timeStart, timeEnd: eventDetails.val().timeEnd } });
               eventList.push({ key: event, data: eventDetails.val() });
             }
             eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
@@ -99,17 +94,14 @@ export function Account() {
 
   function finalizeEvents(eventList) {
     setEvents(eventList);
-    setTimes(timeList);
     setLoaded(true);
   }
 
   function checkConflicts(events, event) {
-    //console.log(events)
-    //console.log(event)
     
     let index = 0;
     
-    while (index < times.length) {
+    while (index < events.length) {
       if (event.key != events[index].key) {
         const eventStart = event.data.timeStart;
         const eventEnd = event.data.timeEnd;
