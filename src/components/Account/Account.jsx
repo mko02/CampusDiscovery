@@ -1,13 +1,17 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { Component, React, useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
   auth,
   getUser,
   logInWithEmailAndPassword,
   logout,
-  registerWithEmailAndPassword
+  registerWithEmailAndPassword,
+  checkLoggedIn,
+  getRSVPEvents,
+  getEvent
 } from "../../firebase";
 import "./Account.css";
+import { EventCard } from "../EventCard/EventCard";
 
 export function Account() {
   const [email, setEmail] = useState("");
@@ -18,6 +22,7 @@ export function Account() {
   const [infoType, setInfoType] = useState("");
   const [infoName, setInfoName] = useState("");
   const [displayEmail, setDisplayEmail] = useState("")
+  const [userID, setUserID] = useState("")
   const radioHandler = (status) => {
     setStatus(status);
   };
@@ -27,12 +32,90 @@ export function Account() {
       setStatus(3);
       getUser(user.uid).then((res) => {
         const value = res.val();
+        setUserID(user.uid);
         setInfoType(value.accountType);
         setInfoName(value.name);
         setDisplayEmail(value.email);
       });
     }
   });
+
+  const [events, setEvents] = useState([]);
+  const [hasLoaded, setLoaded] = useState(false);
+  const displayEvents = events
+    .map(function (obj, i) {
+      if (checkConflicts(events, obj)) {
+        return (
+          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+            <EventCard event={obj.data} color={"red"}/>
+          </a>
+        );
+      } else {
+        return (
+          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+            <EventCard event={obj.data}/>
+          </a>
+        );
+      }
+    });
+
+  var eventList = [];
+
+  useEffect(() => {
+    checkLoggedIn();
+    getEvents(userID);
+  }, [userID]);
+
+  function getEvents(userID) {
+    if (!hasLoaded && userID != "") {
+      getRSVPEvents(userID).then((snap) => {
+        eventList = [];
+        const value = snap.val();
+        let counter = 0;
+        for (let event in value) {
+          // Note any "Not-Attending statuses will not show up in AccountEvents"
+          if (value[event].rsvpStatus == "Not Attending") { 
+            continue;
+          }
+          getEvent(event).then((eventDetails) => {
+            if (eventDetails.exists()) {
+              eventList.push({ key: event, data: eventDetails.val() });
+            }
+            eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
+            if (counter == Object.keys(value).length - 1) {
+              return finalizeEvents(eventList)
+            }
+            counter++;
+          })
+        }
+      });
+    }
+  }
+
+  function finalizeEvents(eventList) {
+    setEvents(eventList);
+    setLoaded(true);
+  }
+
+  function checkConflicts(events, event) {
+    
+    let index = 0;
+    
+    while (index < events.length) {
+      if (event.key != events[index].key) {
+        const eventStart = event.data.timeStart;
+        const eventEnd = event.data.timeEnd;
+        const startTime = events[index].data.timeStart;
+        const endTime = events[index].data.timeEnd;
+        if ((eventStart >= startTime && eventStart <= endTime) || (eventEnd >= startTime && eventEnd <= endTime)
+          || (startTime >= eventStart && startTime <= eventEnd) || (endTime >= eventStart && endTime <= eventEnd)) {
+          return true;
+        }
+      }
+      index++;
+    }
+    return false;
+  }
 
   return (
     <div id="pageContainer">
@@ -226,21 +309,29 @@ export function Account() {
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
+          
         </>
       )}
       {status === 3 && (
         <>
-          <h2>You are logged in</h2>
-          <p>Your name: {infoName}</p>
-          <p>Role type: {infoType}</p>
-          <p>Email: {displayEmail}</p>
-          <a href="#/dashboard" className="btn">
-            Continue to Dashboard
-          </a>
+        <div className="accountHeader">
+          <h2>Your Events:</h2>
+            <div className="infoCard">
+              <p className="infoText">{infoName}</p>
+              <p className="infoText">{infoType}</p>
+              <p className="infoText">{displayEmail}</p>
+            </div>
+        </div>
+          <div>
+            <a href="#/dashboard" className="btn">
+              Continue to Dashboard
+            </a>
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
+          </div>
+          <div className="gridContainer">{displayEvents}</div>
           <br></br>
-          <button className="btn" onClick={logout}>
-            Logout
-          </button>
         </>
       )}
     </div>
