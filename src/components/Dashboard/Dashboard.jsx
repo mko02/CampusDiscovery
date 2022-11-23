@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { BsSortDownAlt } from 'react-icons/bs';
 import ReactPaginate from "react-paginate";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";
 import { EventCard } from "../EventCard/EventCard";
-import { FiFilter } from 'react-icons/fi';
 import "./Dashboard.css";
 
 export function Dashboard() {
@@ -40,7 +40,6 @@ export function Dashboard() {
 
   useEffect(() => {
     checkLoggedIn();
-    getEvents();
   }, []);
 
   function getEvents() {
@@ -73,6 +72,10 @@ export function Dashboard() {
     }
   }
 
+  useEffect(() => {
+    getEvents();
+  }, []);
+
   const pageCount = Math.ceil(events.length / eventsPerPage);
 
   function changePage({ selected }) {
@@ -92,7 +95,7 @@ export function Dashboard() {
         </Link>
       </div>
       <div className="DashBoard_filterIcon_container">
-        <FiFilter 
+        <BsSortDownAlt 
             className="DashBoard_filterIcon"
             onClick={handleOpen}/>
       </div>
