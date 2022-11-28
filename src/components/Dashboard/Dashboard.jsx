@@ -17,6 +17,12 @@ export function Dashboard() {
   }
 
   let sortBy = localStorage.getItem('sort');
+  let filterBy = ["", "", "", ""];
+  filterBy = localStorage.getItem('filter');
+  //[0] = host
+  //[1] = location
+  //[2] = start
+  //[3] = end
 
   const eventsPerPage = 10;
   const pagesVisited = pageNumber * eventsPerPage;
@@ -43,20 +49,6 @@ export function Dashboard() {
         const value = snap.val();
         for (let event in value) {
           eventList.push({ key: event, data: value[event] });
-        }
-
-        if (sortBy === "date") {
-          eventList.sort((a,b) => 
-            b.data.timeStart - a.data.timeStart)
-        } else if (sortBy === "eventName") {
-          eventList.sort((a,b) => 
-            a.data.title.localeCompare(b.data.title))
-        } else if (sortBy === "host") {
-          eventList.sort((a,b) => 
-            a.data.host.localeCompare(b.data.host))
-        } else {
-          eventList.sort((a,b) => 
-            b.data.timeStart - a.data.timeStart)
         }
 
         //console.log(eventList);
