@@ -11,33 +11,80 @@ export function Filter() {
   const [timeEnd, setTimeEnd] = useState("");
   const [host, setHost] = useState("");
 
+  const [sortType, setSortType] = useState();
+
   useEffect(() => {
     checkLoggedIn();
-    let d = new Date();
-    let today = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
-      .toISOString()
-      .substring(0, 16);
-    // setTimeStart(today);
-    // setTimeEnd(today);
+
+    let filterList = JSON.parse(localStorage.getItem('filter'));
+    console.log(filterList);
+    if (filterList != null) {
+      setTitle(filterList[0]);
+      setHost(filterList[1]);
+
+      setTimeStart(
+        new Date(
+          filterList[2] * 1000 - new Date().getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substring(0, 16)
+      );
+      setTimeEnd(
+        new Date(
+          filterList[3] * 1000 - new Date().getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .substring(0, 16)
+      );
+    }
+
+
+    if(localStorage.getItem("sort") == null) {
+      localStorage.setItem("sort", "date");
+    }
+    setSortType(localStorage.getItem("sort"));
     
   }, []);
 
-  function handleFilter() {
-    let filterList = [title, host, timeStart, timeEnd];
+  function handleSave() {
+    let actualTimeStart = new Date(timeStart).getTime() / 1000;
+    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
+    let filterList = [title, host, actualTimeStart, actualTimeEnd];
     console.log('title: ' + title + ', host: ' + host + ", time start: " + timeStart + ', end: ' + timeEnd);
-    localStorage.setItem('filter', filterList);
-    window.location.replace("/#/dashboard");
+    localStorage.setItem('filter', JSON.stringify(filterList));
+    localStorage.setItem('sort', sortType);
+    alert("Saved preferences!")
   }
 
   return (
     <div>
-      <h1>Filter</h1>
+      <h2>Sort</h2>
+      <label htmlFor="sort-start" className="sortFilterBtns">
+        <input type="radio" id="filter-start"
+        checked={sortType === "date"}
+        onChange={(e) => setSortType("date")} />
+        Start Date
+      </label>
+      <label htmlFor="sort-event" className="sortFilterBtns">
+        <input type="radio" id="sort-event"
+        checked={sortType === "eventName"}
+        onChange={(e) => setSortType("eventName")} />
+        Event Name
+      </label>
+      <label htmlFor="sort-host" className="sortFilterBtns">
+        <input type="radio" id="sort-host"
+        checked={sortType === "host"}
+        onChange={(e) => setSortType("host")} />
+        Host Name
+      </label>
+      <h2>Filter</h2>
       <label htmlFor="eventTitle">Title</label>
       <input
         type="text"
         id="eventTitle"
         placeholder="Title of Event"
         name="eventTitle"
+        defaultValue={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       <label htmlFor="eventHost">Host</label>
@@ -46,6 +93,7 @@ export function Filter() {
         id="eventHost"
         placeholder="Host of Event"
         name="eventHost"
+        defaultValue={host}
         onChange={(e) => setHost(e.target.value)}
       />
       <label htmlFor="eventStartTime">Event Start</label>
@@ -70,9 +118,9 @@ export function Filter() {
         <button 
         type="submit"
         onClick={() => {
-          handleFilter();
+          handleSave();
         }}>
-          Filter
+          Save
         </button>
       </div>
 

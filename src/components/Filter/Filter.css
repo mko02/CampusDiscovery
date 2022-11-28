@@ -1,0 +1,23 @@
+.sortFilterBtns input {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+ }
+ 
+ .sortFilterBtns {
+    background-color: rgb(32, 46, 77);
+    padding: 10px;
+    border-radius: 5px;
+    width: 90px;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 16px;
+    transition: 0.1s all linear;
+    margin-bottom: 30px;
+    margin-top: 0;
+ }
+ 
+ .sortFilterBtns:has(> input:checked) {
+    background-color:#5568FE;
+ }
+ 
