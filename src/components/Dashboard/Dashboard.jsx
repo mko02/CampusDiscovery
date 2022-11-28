@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsSortDownAlt } from 'react-icons/bs';
+import { BsFilterLeft, BsSortDownAlt } from 'react-icons/bs';
 import ReactPaginate from "react-paginate";
 import { Link, useSearchParams } from "react-router-dom";
 import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";

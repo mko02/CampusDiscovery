@@ -6,8 +6,7 @@ import {
   Dashboard,
   EditEvent,
   Event,
-  EventMap,
-  Header, NavBar,
+  EventMap, Filter, Header, NavBar,
   Welcome
 } from "./components/exportPages";
 
@@ -84,6 +83,18 @@ function App() {
                 <NavBar></NavBar>
                 <div className="content">
                   <EventMap></EventMap>
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/filter"
+            element={
+              <>
+                <Header></Header>
+                <NavBar></NavBar>
+                <div className="content">
+                  <Filter />
                 </div>
               </>
             }

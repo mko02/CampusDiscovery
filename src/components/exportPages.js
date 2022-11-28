@@ -8,3 +8,4 @@ export { EventMap } from "./EventMap/Map";
 export { Header } from "./Header/Header";
 export { NavBar } from "./NavBar/NavBar";
 export { Welcome } from "./WelcomePage/Welcome";
+export { Filter } from "./Filter/Filter";
