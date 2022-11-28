@@ -10,7 +10,8 @@ import {
   Header,
   Home,
   RSVPAdmin,
-  Welcome
+  Welcome,
+  Filter
 } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
@@ -84,6 +85,17 @@ function App() {
                 <Header></Header>
                 <div className="content">
                   <EventMap></EventMap>
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/filter"
+            element={
+              <>
+                <Header></Header>
+                <div className="content">
+                  <Filter />
                 </div>
               </>
             }
