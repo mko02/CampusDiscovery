@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BsSortDownAlt } from 'react-icons/bs';
+import { BsFilterLeft, BsSortDownAlt } from 'react-icons/bs';
 import ReactPaginate from "react-paginate";
 import { Link, useSearchParams } from "react-router-dom";
 import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";
@@ -11,11 +11,16 @@ export function Dashboard() {
   const [hasLoaded, setLoaded] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const [open, setOpen] = React.useState(false);
+  const [openSort, setOpenSort] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleOpenSort = () => {
+    setOpenSort(!openSort);
   };
+
+  const handleOpenFilter = () => {
+    window.location.assign('/#/createEvent');
+  };
+
   
   const handleSort = (sortBy) => {
     localStorage.setItem('sort', sortBy);
@@ -94,19 +99,25 @@ export function Dashboard() {
           </svg>
         </Link>
       </div>
-      <div className="DashBoard_filterIcon_container">
+
+      <div className="DashBoard_sortIcon_container">
         <BsSortDownAlt 
-            className="DashBoard_filterIcon"
-            onClick={handleOpen}/>
+            className="DashBoard_sortIcon"
+            onClick={handleOpenSort}/>
       </div>
-      <div className="dashboard_dropdown">
-        { open &&
+      <div className="dashboard_sortDropdown">
+        { openSort &&
           <div>
             <button className="dashboard_dropdown_button" onClick={() => handleSort("date")}>Date</button>
             <button className="dashboard_dropdown_button" onClick={() => handleSort("eventName")}>Event Name</button>
             <button className="dashboard_dropdown_button" onClick={() => handleSort({ sort: "host"})}>Host</button>
           </div>
         }
+      </div>
+      <div className="DashBoard_filterIcon_container">
+        <BsFilterLeft 
+            className="DashBoard_filterIcon"
+            onClick={handleOpenFilter}/>
       </div>
       <h1 style={{userSelect: "none"}}>Dashboard:</h1>
       <div style={{marginBottom: "10px"}}>

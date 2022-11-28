@@ -71,6 +71,24 @@
     position: absolute;
 }
 
+.DashBoard_sortIcon {
+    fill: white;
+    color: white;
+    width: 30px;
+    height: 30px;
+}
+
+.DashBoard_sortIcon:hover {
+    cursor: pointer;
+}
+
+.DashBoard_sortIcon_container {
+    position: absolute;
+    right: 0;
+    height: 100px;
+    margin-right: 45px;
+    margin-top: 30px;
+}
 .DashBoard_filterIcon {
     fill: white;
     color: white;
@@ -90,14 +108,13 @@
     margin-top: 30px;
 }
 
-.dashboard_dropdown {
+.dashboard_sortDropdown {
     position: absolute;
     right: 0;
-    margin-right: 45px;
+    margin-right: 75px;
     height: 0;
     width: 130px;
 }
-
 .dashboard_dropdown_button {
     margin: 3px;
     width: 100px;
