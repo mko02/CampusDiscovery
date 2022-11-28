@@ -6,6 +6,6 @@ export { Event } from "./Event/Event";
 export { EventCard } from "./EventCard/EventCard";
 export { EventMap } from "./EventMap/Map";
 export { Header } from "./Header/Header";
-export { Home } from "./Home/Home";
+export { NavBar } from "./NavBar/NavBar";
 export { Welcome } from "./WelcomePage/Welcome";
 export { Filter } from "./Filter/Filter";

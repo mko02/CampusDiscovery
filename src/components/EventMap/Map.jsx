@@ -74,7 +74,7 @@ export function EventMap() {
 
   return (
     <>
-      <div id="map-containter">{hasLoaded && renderMap()}</div>
+      <div id="map-containter" style={{marginTop: "40px"}}>{hasLoaded && renderMap()}</div>
     </>
   );
 }

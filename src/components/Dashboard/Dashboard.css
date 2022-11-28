@@ -67,28 +67,6 @@
     background-color: rgba(44, 49, 58, 0.8);;
 }
 
-.profileIcon {
-    position: absolute;
-}
-
-.DashBoard_sortIcon {
-    fill: white;
-    color: white;
-    width: 30px;
-    height: 30px;
-}
-
-.DashBoard_sortIcon:hover {
-    cursor: pointer;
-}
-
-.DashBoard_sortIcon_container {
-    position: absolute;
-    right: 0;
-    height: 100px;
-    margin-right: 45px;
-    margin-top: 30px;
-}
 .DashBoard_filterIcon {
     fill: white;
     color: white;
@@ -120,8 +98,4 @@
     width: 100px;
     padding: 10px;
     
-}
-
-.content {
-    width: 600px;
 }

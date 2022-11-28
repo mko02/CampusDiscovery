@@ -6,12 +6,8 @@ import {
   Dashboard,
   EditEvent,
   Event,
-  EventMap,
-  Header,
-  Home,
-  RSVPAdmin,
-  Welcome,
-  Filter
+  EventMap, Filter, Header, NavBar,
+  Welcome
 } from "./components/exportPages";
 
 import { HashRouter, NavLink, Route, Routes } from "react-router-dom";
@@ -39,6 +35,7 @@ function App() {
             element={
               <>
                 <Header></Header>
+                <NavBar></NavBar>
                 <div className="content">
                   <Dashboard />
                 </div>
@@ -83,6 +80,7 @@ function App() {
             element={
               <>
                 <Header></Header>
+                <NavBar></NavBar>
                 <div className="content">
                   <EventMap></EventMap>
                 </div>
@@ -94,6 +92,7 @@ function App() {
             element={
               <>
                 <Header></Header>
+                <NavBar></NavBar>
                 <div className="content">
                   <Filter />
                 </div>
