@@ -7,9 +7,7 @@ import {
   EditEvent,
   Event,
   EventMap,
-  Header,
-  Home,
-  RSVPAdmin,
+  Header, NavBar,
   Welcome
 } from "./components/exportPages";
 
@@ -38,6 +36,7 @@ function App() {
             element={
               <>
                 <Header></Header>
+                <NavBar></NavBar>
                 <div className="content">
                   <Dashboard />
                 </div>
@@ -82,6 +81,7 @@ function App() {
             element={
               <>
                 <Header></Header>
+                <NavBar></NavBar>
                 <div className="content">
                   <EventMap></EventMap>
                 </div>

@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
 .content {
     width: 90%;
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
     margin-top: 90px;
     padding: 20px;
     color: white;
-    width: 600px;
 }
 
 html,
