@@ -17,6 +17,14 @@ export function Dashboard() {
   }
 
   let sortBy = localStorage.getItem('sort');
+  let filterBy = ["", "", "", ""];
+  filterBy = localStorage.getItem('filter');
+  //[0] = host
+  //[1] = location
+  //[2] = start
+  //[3] = end
+
+  
 
   const eventsPerPage = 10;
   const pagesVisited = pageNumber * eventsPerPage;
@@ -45,6 +53,56 @@ export function Dashboard() {
           eventList.push({ key: event, data: value[event] });
         }
 
+        let filteredList = []
+
+        if (filterBy[0] !== "") {
+          for (let event in eventList) {
+            console.log(eventList[event])
+
+            getUser(eventList[event].data.host).then((snap) => {
+              if ((snap.val().name).includes("a")) {
+                filteredList.push(eventList[event])
+              }
+            })
+          }
+        }
+
+        eventList = filteredList;
+        filteredList = []
+
+        if (filterBy[1] !== "") {
+          for (let event in eventList) {
+
+            if (eventList[event].data.location === filterBy[1]) {
+              filteredList.push(eventList[event])
+            }
+          }
+        }
+
+        eventList = filteredList;
+        filteredList = []
+
+        if (filterBy[2] !== "") {
+          for (let event in eventList) {
+            if (eventList[event].data.timeStart >= filterBy[2]) {
+              filteredList.push(eventList[event])
+            }
+          }
+        }
+
+        eventList = filteredList;
+        filteredList = []
+
+        if (filterBy[3] != null) {
+          for (let event in eventList) {
+            if (eventList[event].data.timeStart <= filterBy[3]) {
+              filteredList.push(eventList[event])
+            }
+          }
+        }
+
+        eventList = filteredList;
+
         if (sortBy === "date") {
           eventList.sort((a,b) => 
             b.data.timeStart - a.data.timeStart)
@@ -65,6 +123,8 @@ export function Dashboard() {
       });
     }
   }
+
+  
 
   useEffect(() => {
     getEvents();
