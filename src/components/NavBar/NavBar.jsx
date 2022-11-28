@@ -7,7 +7,7 @@ export function NavBar(){
         <a href="/#/account"><Styled.Tab>Account</Styled.Tab></a>
         <a href="/#/dashboard"><Styled.Tab>Dashboard</Styled.Tab></a>
         <a href="/#/map"><Styled.Tab>Map</Styled.Tab></a>
-        <a href="/#/filter"><Styled.Tab>Filter & Sort</Styled.Tab></a>
+        <a href="/#/filter"><Styled.Tab>Sort & Filter</Styled.Tab></a>
     </Styled.Container>
     );
 }
