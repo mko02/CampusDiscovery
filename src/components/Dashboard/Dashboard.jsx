@@ -154,7 +154,8 @@ export function Dashboard() {
           Create Event
         </a>
       </div>
-      <div className="gridContainer">{displayEvents}</div>
+      {events.length > 0 && <div className="gridContainer">{displayEvents}</div>}
+      {events.length == 0 && <h3>There are no events that fit the criteria.</h3>}
       <div className="paginationContainer">
         <ReactPaginate
           previousLabel={"Previous"}
