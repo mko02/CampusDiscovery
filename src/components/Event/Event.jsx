@@ -25,9 +25,15 @@ export function Event() {
   const [currentAttending, setCurrentAttending] = useState(0);
   const [inviteOnly, setInviteOnly] = useState(false);
   const [capacity, setCapacity] = useState(0);
-  const { id, sortBy } = useParams();
-
-  const link = "/dashboard"
+  const { id } = useParams();
+  
+  let from = window.location.hash.split("=")[1];
+  let link = "";
+  if (from == "map") {
+    link = "/map"
+  } else {
+    link = "/dashboard"
+  }
 
   useEffect(() => {
     checkLoggedIn();

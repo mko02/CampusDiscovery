@@ -2,16 +2,16 @@ import { onAuthStateChanged } from "firebase/auth";
 import { React, useEffect, useState } from "react";
 import {
   auth,
+  checkLoggedIn,
+  getEvent,
+  getRSVPEvents,
   getUser,
   logInWithEmailAndPassword,
   logout,
-  registerWithEmailAndPassword,
-  checkLoggedIn,
-  getRSVPEvents,
-  getEvent
+  registerWithEmailAndPassword
 } from "../../firebase";
-import "./Account.css";
 import { EventCard } from "../EventCard/EventCard";
+import "./Account.css";
 
 export function Account() {
   const [email, setEmail] = useState("");
@@ -21,8 +21,8 @@ export function Account() {
   const [status, setStatus] = useState(0); // 0 is login, 1 is register
   const [infoType, setInfoType] = useState("");
   const [infoName, setInfoName] = useState("");
-  const [displayEmail, setDisplayEmail] = useState("")
-  const [userID, setUserID] = useState("")
+  const [displayEmail, setDisplayEmail] = useState("");
+  const [userID, setUserID] = useState("");
   const radioHandler = (status) => {
     setStatus(status);
   };
@@ -42,22 +42,21 @@ export function Account() {
 
   const [events, setEvents] = useState([]);
   const [hasLoaded, setLoaded] = useState(false);
-  const displayEvents = events
-    .map(function (obj, i) {
-      if (checkConflicts(events, obj)) {
-        return (
-          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
-            <EventCard event={obj.data} color={"red"}/>
-          </a>
-        );
-      } else {
-        return (
-          <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
-            <EventCard event={obj.data}/>
-          </a>
-        );
-      }
-    });
+  const displayEvents = events.map(function (obj, i) {
+    if (checkConflicts(events, obj)) {
+      return (
+        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+          <EventCard event={obj.data} color={"red"} />
+        </a>
+      );
+    } else {
+      return (
+        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+          <EventCard event={obj.data} />
+        </a>
+      );
+    }
+  });
 
   var eventList = [];
 
@@ -74,19 +73,19 @@ export function Account() {
         let counter = 0;
         for (let event in value) {
           // Note any "Not-Attending statuses will not show up in AccountEvents"
-          if (value[event].rsvpStatus == "Not Attending") { 
+          if (value[event].rsvpStatus == "Not Attending") {
             continue;
           }
           getEvent(event).then((eventDetails) => {
             if (eventDetails.exists()) {
               eventList.push({ key: event, data: eventDetails.val() });
             }
-            eventList.sort((a,b) => b.data.timeStart - a.data.timeStart)
+            eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
             if (counter == Object.keys(value).length - 1) {
-              return finalizeEvents(eventList)
+              return finalizeEvents(eventList);
             }
             counter++;
-          })
+          });
         }
       });
     }
@@ -98,17 +97,20 @@ export function Account() {
   }
 
   function checkConflicts(events, event) {
-    
     let index = 0;
-    
+
     while (index < events.length) {
       if (event.key != events[index].key) {
         const eventStart = event.data.timeStart;
         const eventEnd = event.data.timeEnd;
         const startTime = events[index].data.timeStart;
         const endTime = events[index].data.timeEnd;
-        if ((eventStart >= startTime && eventStart <= endTime) || (eventEnd >= startTime && eventEnd <= endTime)
-          || (startTime >= eventStart && startTime <= eventEnd) || (endTime >= eventStart && endTime <= eventEnd)) {
+        if (
+          (eventStart >= startTime && eventStart <= endTime) ||
+          (eventEnd >= startTime && eventEnd <= endTime) ||
+          (startTime >= eventStart && startTime <= eventEnd) ||
+          (endTime >= eventStart && endTime <= eventEnd)
+        ) {
           return true;
         }
       }
@@ -309,27 +311,25 @@ export function Account() {
           <a href="#/dashboard" className="btn">
             Continue to Dashboard
           </a>
-          
         </>
       )}
       {status === 3 && (
         <>
-        <div className="accountHeader">
-          <h2>Your Events:</h2>
+          <div className="accountHeader">
             <div className="infoCard">
               <p className="infoText">{infoName}</p>
               <p className="infoText">{infoType}</p>
               <p className="infoText">{displayEmail}</p>
             </div>
-        </div>
-          <div>
-            <a href="#/dashboard" className="btn">
+          </div>
+          <a href="#/dashboard" className="btn">
               Continue to Dashboard
             </a>
             <button className="btn" onClick={logout}>
               Logout
             </button>
-          </div>
+          <div id="longline"></div>
+          <h2>Your Events:</h2>
           <div className="gridContainer">{displayEvents}</div>
           <br></br>
         </>

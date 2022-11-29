@@ -1,100 +1,125 @@
 import { onAuthStateChanged } from "firebase/auth";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { addEvent, auth, checkLoggedIn, getUser } from "../../firebase";
 import { LocationSearch } from "../LocationSearch/search";
 import "./Filter.css";
 
 export function Filter() {
-  const [title, setTitle] = useState("");
-  const [timeStart, setTimeStart] = useState("");
-  const [timeEnd, setTimeEnd] = useState("");
-  const [host, setHost] = useState("");
-
   const [sortType, setSortType] = useState();
+  const [sortReverse, setSortReverse] = useState(true);
+
+  const hostRef = useRef(null);
+  const locationRef = useRef(null);
+  const timeStartRef = useRef(null);
+  const timeEndRef = useRef(null);
 
   useEffect(() => {
     checkLoggedIn();
 
-    let filterList = JSON.parse(localStorage.getItem('filter'));
-    console.log(filterList);
+    let filterList = JSON.parse(localStorage.getItem("filter"));
     if (filterList != null) {
-      setTitle(filterList[0]);
-      setHost(filterList[1]);
+      hostRef.current.value = filterList[0];
+      locationRef.current.value = filterList[1];
 
-      setTimeStart(
-        new Date(
+      if (filterList[2] != null) {
+        timeStartRef.current.value = new Date(
           filterList[2] * 1000 - new Date().getTimezoneOffset() * 60000
         )
           .toISOString()
-          .substring(0, 16)
-      );
-      setTimeEnd(
-        new Date(
+          .substring(0, 16);
+      }
+      if (filterList[3] != null) {
+        timeEndRef.current.value = new Date(
           filterList[3] * 1000 - new Date().getTimezoneOffset() * 60000
         )
           .toISOString()
-          .substring(0, 16)
-      );
+          .substring(0, 16);
+      }
     }
 
-
-    if(localStorage.getItem("sort") == null) {
+    if (localStorage.getItem("sort") == null) {
       localStorage.setItem("sort", "date");
     }
     setSortType(localStorage.getItem("sort"));
-    
+
+    if (localStorage.getItem("reverse") == null) {
+      localStorage.setItem("reverse", 0);
+    }
+    setSortReverse(parseInt(localStorage.getItem("reverse")));
   }, []);
 
   function handleSave() {
-    let actualTimeStart = new Date(timeStart).getTime() / 1000;
-    let actualTimeEnd = new Date(timeEnd).getTime() / 1000;
-    let filterList = [title, host, actualTimeStart, actualTimeEnd];
-    console.log('title: ' + title + ', host: ' + host + ", time start: " + timeStart + ', end: ' + timeEnd);
-    localStorage.setItem('filter', JSON.stringify(filterList));
-    localStorage.setItem('sort', sortType);
-    alert("Saved preferences!")
+    let actualTimeStart = new Date(timeStartRef.current.value).getTime() / 1000;
+    let actualTimeEnd = new Date(timeEndRef.current.value).getTime() / 1000;
+    let filterList = [
+      hostRef.current.value,
+      locationRef.current.value,
+      actualTimeStart,
+      actualTimeEnd,
+    ];
+    localStorage.setItem("filter", JSON.stringify(filterList));
+    localStorage.setItem("reverse", sortReverse);
+    localStorage.setItem("sort", sortType);
+    alert("Saved preferences!");
   }
 
   return (
     <div>
-      <h2>Sort</h2>
+      <h2 style={{ paddingTop: "30px" }}>Sort</h2>
+      <label>Sort Criteria<br /><br /></label>
       <label htmlFor="sort-start" className="sortFilterBtns">
-        <input type="radio" id="filter-start"
-        checked={sortType === "date"}
-        onChange={(e) => setSortType("date")} />
+        <input
+          type="radio"
+          id="sort-start"
+          checked={sortType === "date"}
+          onChange={(e) => setSortType("date")}
+        />
         Start Date
       </label>
       <label htmlFor="sort-event" className="sortFilterBtns">
-        <input type="radio" id="sort-event"
-        checked={sortType === "eventName"}
-        onChange={(e) => setSortType("eventName")} />
+        <input
+          type="radio"
+          id="sort-event"
+          checked={sortType === "eventName"}
+          onChange={(e) => setSortType("eventName")}
+        />
         Event Name
       </label>
       <label htmlFor="sort-host" className="sortFilterBtns">
-        <input type="radio" id="sort-host"
-        checked={sortType === "host"}
-        onChange={(e) => setSortType("host")} />
+        <input
+          type="radio"
+          id="sort-host"
+          checked={sortType === "host"}
+          onChange={(e) => setSortType("host")}
+        />
         Host Name
       </label>
+      <label htmlFor="sort-reverse" className="sortReverse">
+      Reverse?<br/>
+        <input
+          type="checkbox"
+          id="sort-reverse"
+          checked={sortReverse === 1}
+          onChange={(e) => setSortReverse(1 - sortReverse)}
+        />
+      </label>
       <h2>Filter</h2>
-      <label htmlFor="eventTitle">Title</label>
-      <input
-        type="text"
-        id="eventTitle"
-        placeholder="Title of Event"
-        name="eventTitle"
-        defaultValue={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
       <label htmlFor="eventHost">Host</label>
       <input
         type="text"
         id="eventHost"
         placeholder="Host of Event"
         name="eventHost"
-        defaultValue={host}
-        onChange={(e) => setHost(e.target.value)}
+        ref={hostRef}
+      />
+      <label htmlFor="eventLocation">Location</label>
+      <input
+        type="text"
+        id="eventLocation"
+        placeholder="Location of Event"
+        name="eventLocation"
+        ref={locationRef}
       />
       <label htmlFor="eventStartTime">Event Start</label>
       <input
@@ -102,8 +127,7 @@ export function Filter() {
         id="eventstartTime"
         placeholder="Enter Event Start Time"
         name="eventStartTime"
-        defaultValue={timeStart}
-        onChange={(e) => setTimeStart(e.target.value)}
+        ref={timeStartRef}
       />
       <label htmlFor="eventEndTime">Event End</label>
       <input
@@ -111,19 +135,18 @@ export function Filter() {
         id="eventEndTime"
         placeholder="Enter Event End Time"
         name="eventEndTime"
-        defaultValue={timeEnd}
-        onChange={(e) => setTimeEnd(e.target.value)}
+        ref={timeEndRef}
       />
-      <div className = "create_event_button">
-        <button 
-        type="submit"
-        onClick={() => {
-          handleSave();
-        }}>
+      <div className="create_event_button">
+        <button
+          type="submit"
+          onClick={() => {
+            handleSave();
+          }}
+        >
           Save
         </button>
       </div>
-
     </div>
   );
 }
