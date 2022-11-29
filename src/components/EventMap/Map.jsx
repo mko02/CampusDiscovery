@@ -29,7 +29,7 @@ export function EventMap() {
         let filterBy = JSON.parse(localStorage.getItem("filter"));
         let sortBy = localStorage.getItem("sort");
         if (filterBy == null) {
-          filterBy = ['', '', null, null]
+          filterBy = ["", "", null, null];
         }
 
         if (filterBy[1] !== "") {
@@ -78,33 +78,42 @@ export function EventMap() {
                 if (sortBy === "date") {
                   eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
                 } else if (sortBy === "eventName") {
-                  eventList.sort((a, b) => a.data.title.localeCompare(b.data.title));
+                  eventList.sort((a, b) =>
+                    a.data.title.localeCompare(b.data.title)
+                  );
                 } else if (sortBy === "host") {
-                  eventList.sort((a, b) => a.data.host.localeCompare(b.data.host));
+                  eventList.sort((a, b) =>
+                    a.data.host.localeCompare(b.data.host)
+                  );
                 } else {
                   eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
                 }
                 if (localStorage.getItem("reverse") == "1") {
                   eventList.reverse();
                 }
-      
-      
+
                 let locationList = {};
                 for (let event in eventList) {
-                  if (locationList[eventList[event].data.location] != undefined) {
+                  if (
+                    locationList[eventList[event].data.location] != undefined
+                  ) {
                     locationList[eventList[event].data.location].push(
                       eventList[event]
                     );
                   } else {
-                    locationList[eventList[event].data.location] = [eventList[event]];
+                    locationList[eventList[event].data.location] = [
+                      eventList[event],
+                    ];
                   }
                 }
                 console.log(locationList);
-      
+
                 let locationListFix = [];
                 for (const [key, value] of Object.entries(locationList)) {
                   locationListFix.push(value);
                 }
+                setEvents(locationListFix);
+                setLoaded(true);
               }
             });
           }
@@ -121,7 +130,6 @@ export function EventMap() {
           if (localStorage.getItem("reverse") == "1") {
             eventList.reverse();
           }
-
 
           let locationList = {};
           for (let event in eventList) {
@@ -171,7 +179,9 @@ export function EventMap() {
           {location.map(function (event, i) {
             return (
               <div key={i}>
-                <a href={`/#/event/${event.key}?from=map`}>{event.data.title}</a>
+                <a href={`/#/event/${event.key}?from=map`}>
+                  {event.data.title}
+                </a>
               </div>
             );
           })}
@@ -186,7 +196,7 @@ export function EventMap() {
         center={center}
         style={{ width: "700px", height: "500px", display: "inline-block" }}
         zoom={15.4}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         maxZoom={18}
         minZoom={15}
         maxBounds={[
