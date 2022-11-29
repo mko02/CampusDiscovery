@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import React, { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { coordinates } from "../../constants";
-import { checkLoggedIn, getAnyEvent } from "../../firebase";
+import { checkLoggedIn, getAnyEvent, getUser } from "../../firebase";
 import "./map.css";
 
 export function EventMap() {
@@ -13,26 +13,149 @@ export function EventMap() {
 
   const center = [33.77631, -84.39788];
 
-  useEffect(() => {
+  var eventList = [];
+
+  function getEvents() {
     if (!hasLoaded) {
       getAnyEvent().then((snap) => {
-        let eventList = [];
+        eventList = [];
         const value = snap.val();
         for (let event in value) {
           eventList.push({ key: event, data: value[event] });
         }
-        eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
-        setEvents(eventList);
-        setLoaded(true);
+        console.log(eventList);
+
+        let filteredList = [];
+        let filterBy = JSON.parse(localStorage.getItem("filter"));
+        let sortBy = localStorage.getItem("sort");
+
+        if (filterBy[1] !== "") {
+          for (let event in eventList) {
+            if (
+              eventList[event].data.location.toLowerCase().includes(filterBy[1])
+            ) {
+              filteredList.push(eventList[event]);
+            }
+          }
+          eventList = filteredList;
+          filteredList = [];
+        }
+
+        if (filterBy[2] !== null) {
+          for (let event in eventList) {
+            if (eventList[event].data.timeStart >= filterBy[2]) {
+              filteredList.push(eventList[event]);
+            }
+          }
+          eventList = filteredList;
+          filteredList = [];
+        }
+
+        if (filterBy[3] != null) {
+          for (let event in eventList) {
+            if (eventList[event].data.timeStart <= filterBy[3]) {
+              filteredList.push(eventList[event]);
+            }
+          }
+          eventList = filteredList;
+          filteredList = [];
+        }
+
+        if (filterBy[0] !== "") {
+          let counter = eventList.length;
+          for (let event in eventList) {
+            getUser(eventList[event].data.host).then((snap) => {
+              if (snap.val().name.toLowerCase().includes(filterBy[0])) {
+                filteredList.push(eventList[event]);
+              }
+              counter--;
+              if (counter == 0) {
+                eventList = filteredList;
+
+                if (sortBy === "date") {
+                  eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
+                } else if (sortBy === "eventName") {
+                  eventList.sort((a, b) => a.data.title.localeCompare(b.data.title));
+                } else if (sortBy === "host") {
+                  eventList.sort((a, b) => a.data.host.localeCompare(b.data.host));
+                } else {
+                  eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
+                }
+                if (localStorage.getItem("reverse") == "1") {
+                  eventList.reverse();
+                }
+      
+      
+                let locationList = {};
+                for (let event in eventList) {
+                  if (locationList[eventList[event].data.location] != undefined) {
+                    locationList[eventList[event].data.location].push(
+                      eventList[event]
+                    );
+                  } else {
+                    locationList[eventList[event].data.location] = [eventList[event]];
+                  }
+                }
+                console.log(locationList);
+      
+                let locationListFix = [];
+                for (const [key, value] of Object.entries(locationList)) {
+                  locationListFix.push(value);
+                }
+              }
+            });
+          }
+        } else {
+          if (sortBy === "date") {
+            eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
+          } else if (sortBy === "eventName") {
+            eventList.sort((a, b) => a.data.title.localeCompare(b.data.title));
+          } else if (sortBy === "host") {
+            eventList.sort((a, b) => a.data.host.localeCompare(b.data.host));
+          } else {
+            eventList.sort((a, b) => b.data.timeStart - a.data.timeStart);
+          }
+          if (localStorage.getItem("reverse") == "1") {
+            eventList.reverse();
+          }
+
+
+          let locationList = {};
+          for (let event in eventList) {
+            if (locationList[eventList[event].data.location] != undefined) {
+              locationList[eventList[event].data.location].push(
+                eventList[event]
+              );
+            } else {
+              locationList[eventList[event].data.location] = [eventList[event]];
+            }
+          }
+          console.log(locationList);
+
+          let locationListFix = [];
+          for (const [key, value] of Object.entries(locationList)) {
+            locationListFix.push(value);
+          }
+          setEvents(locationListFix);
+          setLoaded(true);
+        }
       });
     }
+  }
+
+  useEffect(() => {
+    getEvents();
   }, []);
-  
-  const getAllMarkers = events.map(function (eventDetails, i) {
+
+  const getAllMarkers = events.map(function (location, i) {
+    console.log(location);
     return (
       <Marker
-        key={eventDetails.key}
-        position={coordinates.find(obj => obj.name == eventDetails.data.location).location}
+        key={location[0].key}
+        position={
+          coordinates.find((obj) => obj.name == location[0].data.location)
+            .location
+        }
         icon={
           new Icon({
             iconUrl: markerIconPng,
@@ -42,7 +165,13 @@ export function EventMap() {
         }
       >
         <Popup>
-          <a href={`/#/event/${eventDetails.key}`}>{eventDetails.data.title}</a>
+          {location.map(function (event, i) {
+            return (
+              <div key={i}>
+                <a href={`/#/event/${event.key}?from=map`}>{event.data.title}</a>
+              </div>
+            );
+          })}
         </Popup>
       </Marker>
     );
@@ -74,7 +203,10 @@ export function EventMap() {
 
   return (
     <>
-      <div id="map-containter" style={{marginTop: "40px"}}>{hasLoaded && renderMap()}</div>
+      <h1 style={{ paddingTop: "30px" }}>Map</h1>
+      <div id="map-containter" style={{ marginTop: "40px" }}>
+        {hasLoaded && renderMap()}
+      </div>
     </>
   );
 }

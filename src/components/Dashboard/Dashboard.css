@@ -1,8 +1,10 @@
 .gridContainer {
     display: grid;
     grid-template-columns: 300px 300px;
-    width: 600px;
+    width: fit-content;
     margin: auto;
+    padding: 0;
+    column-gap: 20px;
 }
 
 .gridCard {

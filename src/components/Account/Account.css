@@ -117,7 +117,6 @@ i {
    padding-bottom: 10px;
    margin-left: auto;
    margin-right: auto;
-   border-bottom: 4px dotted #8185a1;
 }
 
 .radiospan {
@@ -147,12 +146,6 @@ i {
    margin: 10px;
 }
 
-.accountHeader {
-   display: flex;
-   width: 100%;
-   margin-bottom: 20px;
-}
-
 .infoCard {
    background-color: #282c34;
    border-radius: 5px;
@@ -162,7 +155,7 @@ i {
 }
 
 .infoText {
-   text-align: right;
+   text-align: center;
    line-height: 5px;
    font-size: 15px;
    margin: 15px;
@@ -180,3 +173,9 @@ i {
    text-decoration: none;
 }
 
+
+
+#longline {
+   border-bottom: 4px dotted #8185a1;
+   margin-top: 5px;
+}
