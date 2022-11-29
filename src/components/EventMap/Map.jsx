@@ -28,6 +28,9 @@ export function EventMap() {
         let filteredList = [];
         let filterBy = JSON.parse(localStorage.getItem("filter"));
         let sortBy = localStorage.getItem("sort");
+        if (filterBy == null) {
+          filterBy = ['', '', null, null]
+        }
 
         if (filterBy[1] !== "") {
           for (let event in eventList) {

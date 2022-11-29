@@ -51,7 +51,9 @@ export function Dashboard() {
         let filteredList = [];
         let sortBy = localStorage.getItem("sort");
         let filterBy = JSON.parse(localStorage.getItem("filter"));
-
+        if (filterBy == null) {
+          filterBy = ['', '', null, null]
+        }
         if (filterBy[1] !== "") {
           for (let event in eventList) {
             if (eventList[event].data.location.toLowerCase().includes(filterBy[1])) {
