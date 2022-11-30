@@ -45,13 +45,13 @@ export function Account() {
   const displayEvents = events.map(function (obj, i) {
     if (checkConflicts(events, obj)) {
       return (
-        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}?from=account`}>
           <EventCard event={obj.data} color={"red"} />
         </a>
       );
     } else {
       return (
-        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}`}>
+        <a className="gridCard" key={obj.key} href={`/#/event/${obj.key}?from=account`}>
           <EventCard event={obj.data} />
         </a>
       );
