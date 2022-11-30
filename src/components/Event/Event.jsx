@@ -29,8 +29,8 @@ export function Event() {
   
   let from = window.location.hash.split("=")[1];
   let link = "";
-  if (from == "map") {
-    link = "/map"
+  if (from != null) {
+    link = "/"+from;
   } else {
     link = "/dashboard"
   }
